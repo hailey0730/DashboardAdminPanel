@@ -107,7 +107,7 @@
         </div>
 
 
-        <div class="row">
+        <!-- <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header card-header-icon" data-background-color="rose">
@@ -138,9 +138,9 @@
                 </div>
             </div>
         </div>
-        </div>
+        </div> -->
 
-
+<!-- 
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -170,6 +170,106 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+
+
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title lighter smaller">
+                            <i class="ace-icon fa fa-comment blue"></i>
+                            Conversation
+                        </h4>
+                        <!-- <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div> -->
+                    </div>
+            
+                    <div class="widget-body">
+                        <div class="widget-main no-padding">
+                            <div class="scroll-content">
+                            <div class="dialogs" *ngFor="let conv of conversations;">
+            
+                                <div class="itemdiv dialogdiv" *ngIf="IsAdmin(conv.Name);else notAdmin">
+                                    
+                                    <div class="body Admin">
+                                        <div class="time">
+                                            <i class="ace-icon fa fa-clock-o"></i>
+                                            <span class="red">{{conv.Time}}</span>
+                                        </div>
+            
+                                        <div class="name">
+                                            <a href="#">{{conv.Name}}</a>
+                                            <span class="label label-info arrowed arrowed-in-right">admin</span>
+                                        </div>
+                                        <div class="text">{{conv.Comment}}</div>
+            
+                                        <div class="tools">
+                                            <a href="#" class="btn btn-minier btn-info">
+                                                <i class="icon-only ace-icon fa fa-share"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="user right">
+                                        <img alt="Bob's Avatar" src="{{conv.ImgUrl}}" />
+                                    </div>
+                                </div>
+
+                                <ng-template #notAdmin>
+                                    <div class="itemdiv dialogdiv">
+                                        <div class="user">
+                                            <img alt="Alex's Avatar" src="{{conv.ImgUrl}}" />
+                                        </div>
+                                    
+                                        <div class="body">
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="blue">{{conv.Time}}</span>
+                                            </div>
+                                    
+                                            <div class="name">
+                                                <a href="#">{{conv.Name}}</a>
+                                            </div>
+                                            <div class="text">{{conv.Comment}}</div>
+                                    
+                                            <div class="tools">
+                                                <a href="#" class="btn btn-minier btn-info">
+                                                    <i class="icon-only ace-icon fa fa-share"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </ng-template>
+            
+                            </div>
+                            </div>
+            
+                            <form>
+                                <div class="form-actions">
+                                    <div class="input-group">
+                                        <input placeholder="Type your message here ..." type="text" class="form-control message" name="message" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-sm btn-info no-radius" type="button" (click)="sendMessage()">
+                                                <i class="ace-icon fa fa-share"></i>
+                                                Send
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.widget-main -->
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-box -->
+            </div>
+            <!-- /.col -->
         </div>
 
 

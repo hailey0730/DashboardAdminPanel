@@ -140,6 +140,11 @@ export class NavbarComponent implements OnInit {
         }
     };
 
+    search(){
+        var searchKeyWord = $('.search').val();
+        console.log(searchKeyWord);     //DEBUG Able to access input value
+    }
+
     getTitle() {
         let titlee: any = this.location.prepareExternalUrl(this.location.path());
         for (let i = 0; i < this.listTitles.length; i++) {

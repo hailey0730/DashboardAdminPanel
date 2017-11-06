@@ -10,6 +10,8 @@ declare const $: any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./css/ace.min.css', './css/bootstrap.min.css', './css/conversation.css'],
+//   styleUrls: ['./css/conversation.css'],
   providers: [
       dashboardService
   ] 
@@ -21,9 +23,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   // constructor(private navbarTitleService: NavbarTitleService, private notificationService: NotificationService) { }
   public tableData: TableData;
   public figures: JSON[];
+  public conversations: any[];
+  private adminName = "Bob";
   private testlink = "http://www.drcare.ai/php/test.php";
   private simpleChartsLink = "http://hayhay0730.000webhostapp.com/simpleCharts.php";
   private usersDataLink = "http://hayhay0730.000webhostapp.com/loadUsersConv.php";
+  private conversationLink = "http://hayhay0730.000webhostapp.com/conversation.php";
 
   startAnimationForLineChart(chart: any) {
       let seq: any, delays: any, durations: any;
@@ -108,44 +113,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log("call loadSimpleCharts from OnInit");
       this.loadSimpleCharts();
       
-      //initialize world map================================================================
-      const mapData = {
-           'AU': 760,
-           'BR': 550,
-           'CA': 120,
-           'DE': 1300,
-           'FR': 540,
-           'GB': 690,
-           'GE': 200,
-           'IN': 200,
-           'RO': 600,
-           'RU': 300,
-           'US': 2920,
-       };
-          $('#worldMap').vectorMap({
-              map: 'world_mill_en',
-              backgroundColor: 'transparent',
-              zoomOnScroll: false,
-              regionStyle: {
-                  initial: {
-                      fill: '#e4e4e4',
-                      'fill-opacity': 0.9,
-                      stroke: 'none',
-                      'stroke-width': 0,
-                      'stroke-opacity': 0
-                  }
-              },
-
-              series: {
-                  regions: [{
-                      values: mapData,
-                      scale: ['#AAAAAA', '#444444'],
-                      normalizeFunction: 'polynomial'
-                  }]
-              },
-          });
-
-          //testing get json from dashboardService=================================
+         //testing get json from dashboardService=================================
         //   console.log('outside promise');  //DEBUG
           this.dashboardService.getJson(this.testlink).then((data) => {
             this.figures = data;
@@ -202,6 +170,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           new Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
 
 
+          //initialize conversation block========================================
+          this.dashboardService.getJson(this.conversationLink).then((data) => {
+            this.conversations = data;
+          });
+
+
    }
    
    ngAfterViewInit() {
@@ -242,6 +216,28 @@ export class DashboardComponent implements OnInit, AfterViewInit {
            bool = true;
        }
        return bool;
+   }
+
+   IsAdmin(name):boolean{
+       var bool = false;
+       if(name == this.adminName){
+           bool = true;
+       }
+       return bool;
+   }
+
+   sendMessage(){
+       var message = $('.message').val();
+
+       var newMessage = {
+           "Name": this.adminName,
+           "ImgUrl": "",
+           "Comment": message,
+           "Time": (new Date).toLocaleTimeString()
+        };
+   
+       console.log(newMessage);
+       this.conversations.push(newMessage);
    }
 
    loadSimpleCharts(){
