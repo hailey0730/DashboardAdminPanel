@@ -2,6 +2,8 @@ import { Component, OnInit, Renderer, ViewChild, ElementRef, Directive } from '@
 import { ROUTES } from '../.././sidebar/sidebar.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { navbarService } from './navbar.service'
+import { Observable } from "rxjs/Observable";
 const misc: any = {
     navbar_menu_visible: 0,
     active_collapse: true,
@@ -11,10 +13,14 @@ const misc: any = {
 declare var $: any;
 @Component({
     selector: 'app-navbar-cmp',
-    templateUrl: 'navbar.component.html'
+    templateUrl: 'navbar.component.html',
+    providers: [
+        navbarService
+    ] 
 })
 
 export class NavbarComponent implements OnInit {
+    notices: JSON[]; // = ["my first testing notification","the second one", "the last one by Hailey"];
     private listTitles: any[];
     location: Location;
     private nativeElement: Node;
@@ -23,7 +29,7 @@ export class NavbarComponent implements OnInit {
 
     @ViewChild('app-navbar-cmp') button: any;
 
-    constructor(location: Location, private renderer: Renderer, private element: ElementRef) {
+    constructor(location: Location, private renderer: Renderer, private element: ElementRef, private navbarService: navbarService) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
@@ -92,6 +98,15 @@ export class NavbarComponent implements OnInit {
                 clearInterval(simulateWindowResize);
             }, 1000);
         });
+
+        //changing notifications for testing purpose============================================
+        this.navbarService.notificationsData().then((data) => {
+            console.log(data);  //DEBUG
+            this.notices = data;
+            
+        });
+        
+
     }
     isMobileMenu() {
         if ($(window).width() < 991) {
@@ -144,4 +159,6 @@ export class NavbarComponent implements OnInit {
     getPath() {
         return this.location.prepareExternalUrl(this.location.path());
     }
+
+    
 }

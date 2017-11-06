@@ -1,0 +1,29 @@
+[
+    {
+      "backgroundColor": "blue",
+      "bigIcon": "accessibility",
+      "category": "Accessibility",
+      "number": "1000",
+      "smallIcon": "done",
+      "smallText": "healthy people",
+      "optionalLink": ""
+    },
+    {
+      "backgroundColor": "yellow",
+      "bigIcon": "accessibility",
+      "category": "Accessibility",
+      "number": "1000",
+      "smallIcon": "done",
+      "smallText": "healthy people",
+      "optionalLink": ""
+    },
+    {
+      "backgroundColor": "purple",
+      "bigIcon": "accessibility",
+      "category": "Accessibility",
+      "number": "1000",
+      "smallIcon": "warning",
+      "smallText": "test link",
+      "optionalLink": "www.google.com"
+    }
+  ]
