@@ -179,7 +179,7 @@
                     <div class="widget-header">
                         <h4 class="widget-title lighter smaller">
                             <i class="ace-icon fa fa-comment blue"></i>
-                            Conversation
+                            醫生問答
                         </h4>
                         <!-- <div class="widget-toolbar">
                             <a href="#" data-action="collapse">
@@ -207,11 +207,6 @@
                                         </div>
                                         <div class="text">{{conv.Comment}}</div>
             
-                                        <div class="tools">
-                                            <a href="#" class="btn btn-minier btn-info">
-                                                <i class="icon-only ace-icon fa fa-share"></i>
-                                            </a>
-                                        </div>
                                     </div>
 
                                     <div class="user right">
@@ -237,7 +232,7 @@
                                             <div class="text">{{conv.Comment}}</div>
                                     
                                             <div class="tools">
-                                                <a href="#" class="btn btn-minier btn-info">
+                                                <a (click)="reply(conv.Name, conv.Comment)" class="btn btn-minier btn-info">
                                                     <i class="icon-only ace-icon fa fa-share"></i>
                                                 </a>
                                             </div>
@@ -252,7 +247,7 @@
                             <form>
                                 <div class="form-actions">
                                     <div class="input-group">
-                                        <input placeholder="Type your message here ..." type="text" class="form-control message" name="message" />
+                                        <input placeholder="Type your message here ..." type="textarea" rows="3" class="form-control message" name="message" />
                                         <span class="input-group-btn">
                                             <button class="btn btn-sm btn-info no-radius" type="button" (click)="sendMessage()">
                                                 <i class="ace-icon fa fa-share"></i>

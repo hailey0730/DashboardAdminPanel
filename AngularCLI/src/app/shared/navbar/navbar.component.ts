@@ -101,7 +101,7 @@ export class NavbarComponent implements OnInit {
 
         //changing notifications for testing purpose============================================
         this.navbarService.notificationsData().then((data) => {
-            console.log(data);  //DEBUG
+            // console.log(data);  //DEBUG
             this.notices = data;
             
         });

@@ -38,6 +38,10 @@
     float: right;
 }
 
+.tools{
+    cursor: pointer;
+}
+
 .scroll-content{
     max-height: 40em;
     overflow-y: scroll;

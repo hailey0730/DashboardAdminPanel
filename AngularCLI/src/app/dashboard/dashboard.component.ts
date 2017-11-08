@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public figures: JSON[];
   public conversations: any[];
   private adminName = "Bob";
+  private adminPic = "../../assets/img/faces/avatar.jpg";
   private testlink = "http://www.drcare.ai/php/test.php";
   private simpleChartsLink = "http://hayhay0730.000webhostapp.com/simpleCharts.php";
   private usersDataLink = "http://hayhay0730.000webhostapp.com/loadUsersConv.php";
@@ -231,13 +232,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
        var newMessage = {
            "Name": this.adminName,
-           "ImgUrl": "",
+           "ImgUrl": this.adminPic,
            "Comment": message,
            "Time": (new Date).toLocaleTimeString()
         };
    
        console.log(newMessage);
        this.conversations.push(newMessage);
+        console.log(this.conversations);
+    //    this.dashboardService.postJson('http://hayhay0730.000webhostapp.com/conversation.json', this.conversations);
+   }
+
+   reply(name, comment){
+       var replyText = '@' + name + ' \n "'  + comment + '"  ' + this.adminName + " : " ;
+       $('.message').val(replyText);
+
    }
 
    loadSimpleCharts(){

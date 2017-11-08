@@ -33,4 +33,8 @@ export class dashboardService {
         
     }
 
+    postJson(link, obj){
+        this.http.post(link, obj);
+    }
+
 }
