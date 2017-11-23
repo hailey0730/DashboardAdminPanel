@@ -5,7 +5,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from "rxjs/Observable";
 
 @Injectable()
-export class dashboardService {
+export class appService {
     // private testlink = "../PHP/loadMapTime.php";
     // private testlink = "http://www.drcare.ai/php/loadMapTime.php";
     private testlink = "http://www.drcare.ai/php/test.php";

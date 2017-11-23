@@ -1,0 +1,79 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row" *ngIf="figures != null">
+            <div class="col-md-4" *ngFor="let figure of figures;">
+                <div class="card card-stats">
+                    <div class="card-header" [attr.data-background-color]="figure.backgroundColor">
+                        <i class="material-icons">{{figure.bigIcon}}</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">{{figure.category}}</p>
+                        <h3 class="card-title">{{figure.number}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">{{figure.smallIcon}}</i>
+                            <a *ngIf="hasLink(figure);else noLink" href="{{figure.optionalLink}}">{{figure.smallText}}</a>
+                            <ng-template #noLink>{{figure.smallText}}</ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="red">
+                        <i class="material-icons">pie_chart</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">User Gender</h4>
+                    </div>
+                    <div id="chartPreferences" class="ct-chart"></div>
+                    <div class="card-footer">
+                        <h6>Legend</h6>
+                        <i class="fa fa-circle text-info"></i> Male
+                        <i class="fa fa-circle text-danger"></i> Female
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="red">
+                        <i class="material-icons">pie_chart</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">User Region</h4>
+                    </div>
+                    <div id="chartPreferences2" class="ct-chart"></div>
+                    <div class="card-footer">
+                        <h6>Legend</h6>
+                        <i class="fa fa-circle text-info"></i> Kowloon
+                        <i class="fa fa-circle text-warning"></i> New Territories
+                        <i class="fa fa-circle text-danger"></i> Hong Kong Island
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">insert_chart</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Tracking conversation
+                            <!-- <small>- Bar Chart</small> -->
+                        </h4>
+                    </div>
+                    <div id="multipleBarsChart" class="ct-chart"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

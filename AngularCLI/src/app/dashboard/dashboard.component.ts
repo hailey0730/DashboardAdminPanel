@@ -3,8 +3,8 @@ import { TableData } from '../md/md-table/md-table.component';
 import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
 
 import * as Chartist from 'chartist';
-import { dashboardService } from './dashboard.service'
-import { Observable } from "rxjs/Observable";
+import { appService } from '../app.service'
+// import { Observable } from "rxjs/Observable";
 declare const $: any;
 
 @Component({
@@ -13,20 +13,25 @@ declare const $: any;
   styleUrls: ['./css/ace.min.css', './css/bootstrap.min.css', './css/conversation.css'],
 //   styleUrls: ['./css/conversation.css'],
   providers: [
-      dashboardService
+      appService
   ] 
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-    constructor(private dashboardService: dashboardService){
+    constructor(private appService: appService){
 
     }
   // constructor(private navbarTitleService: NavbarTitleService, private notificationService: NotificationService) { }
   public tableData: TableData;
-  public figures: JSON[];
+  public figures: any[];
+  public otherFigures: any[];
   public conversations: any[];
+  public newUser : any;
+  public newMessage: any;
+  public updateTime: any;
   private adminName = "Bob";
   private adminPic = "../../assets/img/faces/avatar.jpg";
-  private testlink = "http://www.drcare.ai/php/test.php";
+  private testlink = "http://hayhay0730.000webhostapp.com/test.php";
+//   private testlink = "http://www.drcare.ai/php/test.php";
   private simpleChartsLink = "http://hayhay0730.000webhostapp.com/simpleCharts.php";
   private usersDataLink = "http://hayhay0730.000webhostapp.com/loadUsersConv.php";
   private conversationLink = "http://hayhay0730.000webhostapp.com/conversation.php";
@@ -88,25 +93,49 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   // constructor(private navbarTitleService: NavbarTitleService) { }
   public ngOnInit() {
-    //   this.tableData = {
-    //       headerRow: ['ID', 'Name', 'Salary', 'Country', 'City'],
-    //       dataRows: [
-    //           ['US', 'USA', '2.920	', '53.23%'],
-    //           ['DE', 'Germany', '1.300', '20.43%'],
-    //           ['AU', 'Australia', '760', '10.35%'],
-    //           ['GB', 'United Kingdom	', '690', '7.87%'],
-    //           ['RO', 'Romania', '600', '5.94%'],
-    //           ['BR', 'Brasil', '550', '4.34%']
-    //       ]
-    //    };
+    
        //test get users conversations from server===========================================
-      this.dashboardService.getJson(this.usersDataLink).then((data) => {
-          this.tableData = {
-              headerRow: data['headerRow'],
-              dataRows:data['Users']
-          }
+    //   this.appService.getJson(this.usersDataLink).then((data) => {
+    //       this.tableData = {
+    //           headerRow: data['headerRow'],
+    //           dataRows:data['Users']
+    //       }
 
-      });
+    //   });
+
+      /*  **************** Coloured Rounded Line Chart - Line Chart ******************** */
+
+
+      const dataColouredBarsChart = {
+          labels: ['\'06', '\'07', '\'08', '\'09', '\'10', '\'11', '\'12', '\'13', '\'14', '\'15'],
+          series: [
+              [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944],
+              [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647]
+          ]
+      };
+
+      const optionsColouredBarsChart: any = {
+          lineSmooth: Chartist.Interpolation.cardinal({
+              tension: 10
+          }),
+          axisY: {
+              showGrid: true,
+              offset: 40
+          },
+          axisX: {
+              showGrid: false,
+          },
+          low: 0,
+          high: 1000,
+          showPoint: true,
+          height: '300px'
+      };
+
+
+      const colouredBarsChart = new Chartist.Line('#colouredBarsChart', dataColouredBarsChart,
+          optionsColouredBarsChart);
+
+      this.startAnimationForLineChart(colouredBarsChart);
 
 
     
@@ -114,67 +143,75 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log("call loadSimpleCharts from OnInit");
       this.loadSimpleCharts();
       
-         //testing get json from dashboardService=================================
+         //testing get json from appService=================================
         //   console.log('outside promise');  //DEBUG
-          this.dashboardService.getJson(this.testlink).then((data) => {
-            this.figures = data;
-            // console.log(this.figures);  //DEBUG
-            // $('.card-header').attr('data-background-color', this.figures[2]['backgroundColor']);
+        //   this.appService.getJson(this.testlink).then((data) => {
+        //     this.figures = data;
+        //     // console.log(this.figures);  //DEBUG
+        //     // $('.card-header').attr('data-background-color', this.figures[2]['backgroundColor']);
             
-          });
+        //   });
 
-          //initialize multipleBarsChart=========================================
-          const dataMultipleBarsChart = {
-              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-              series: [
-                  [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-                  [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
-              ]
-          };
+      this.figures = [
+          {
+              "backgroundColor": "blue",
+              "bigIcon": "accessibility",
+              "category": "用戶總數",
+              "number": "1000",
+              "smallIcon": "increase",
+              "smallText": "3%"
+          },
+          {
+              "backgroundColor": "orange",
+              "bigIcon": "question_answer",
+              "category": "信息總數",
+              "number": "3500",
+              "smallIcon": "increase",
+              "smallText": "5%"
+          },
+          {
+              "backgroundColor": "purple",
+              "bigIcon": "chat_bubble",
+              "category": "平均每名用戶的信息",
+              "number": "5",
+              "smallIcon": "decrease",
+              "smallText": "1%"
+          },
+          {
+              "backgroundColor": "red",
+              "bigIcon": "reply",
+              "category": "分享總數",
+              "number": "400",
+              "smallIcon": "increase",
+              "smallText": "5%"
+          }
+      ]
 
-          const optionsMultipleBarsChart = {
-              seriesBarDistance: 10,
-              axisX: {
-                  showGrid: false
-              },
-              height: '300px'
-          };
+      this.otherFigures = [
+          {
+              "backgroundColor": "blue",
+              "bigIcon": "message",
+              "category": "收到信息數",
+              "number": "2600",
+              "smallIcon": "arrow_upward",
+              "smallText": "2%"
+          },
+          {
+              "backgroundColor": "purple",
+              "bigIcon": "comment",
+              "category": "寄出信息數",
+              "number": "1000",
+              "smallIcon": "arrow_upward",
+              "smallText": "3%"
+          }
+      ]
 
-          const responsiveOptionsMultipleBarsChart: any = [
-              ['screen and (max-width: 640px)', {
-                  seriesBarDistance: 5,
-                  axisX: {
-                      labelInterpolationFnc: function (value: any) {
-                          return value[0];
-                      }
-                  }
-              }]
-          ];
-
-          const multipleBarsChart = new Chartist.Bar('#multipleBarsChart', dataMultipleBarsChart,
-              optionsMultipleBarsChart, responsiveOptionsMultipleBarsChart);
-
-          // start animation for the Emails Subscription Chart
-          this.startAnimationForBarChart(multipleBarsChart);
-          
-          
-          //initialize PieChart==================================================
-          const dataPreferences = {
-              labels: ['50%', '12%', '32%', '6%'],
-              series: [50, 12, 32, 6]
-          };
-
-          const optionsPreferences = {
-              height: '230px'
-          };
-
-          new Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
-
+         
 
           //initialize conversation block========================================
-          this.dashboardService.getJson(this.conversationLink).then((data) => {
-            this.conversations = data;
-          });
+        //   this.appService.getJson(this.conversationLink).then((data) => {
+        //     this.conversations = data;
+        //   });
 
 
    }
@@ -211,13 +248,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
        $('[rel="tooltip"]').tooltip();
    }
 
-   hasLink(figure):boolean{
-       var bool = false;
-       if(figure.optionalLink){
-           bool = true;
-       }
-       return bool;
-   }
 
    IsAdmin(name):boolean{
        var bool = false;
@@ -240,7 +270,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
        console.log(newMessage);
        this.conversations.push(newMessage);
         console.log(this.conversations);
-    //    this.dashboardService.postJson('http://hayhay0730.000webhostapp.com/conversation.json', this.conversations);
+    //    this.appService.postJson('http://hayhay0730.000webhostapp.com/conversation.json', this.conversations);
    }
 
    reply(name, comment){
@@ -250,151 +280,142 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    }
 
    loadSimpleCharts(){
+       const today = new Date();
+       const y = today.getFullYear();
+       const m = today.getMonth();
+       const d = today.getDate();
+       const h = today.getHours();
+       const min = today.getMinutes();
+       const s = today.getSeconds();
+
+       this.updateTime = y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
        /* ----------==========     Daily Sales Chart initialization    ==========---------- */
 
-       //   const dataDailySalesChart = {
-       //       labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-       //       series: [
-       //           [12, 17, 7, 17, 23, 18, 38]
-       //       ]
-       //   };
+         const dataDailySalesChart = {
+             labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+             series: [
+                 [12, 17, 7, 17, 23, 18, 38]
+             ]
+         };
 
-    //    const optionsDailySalesChart = {
-    //        lineSmooth: Chartist.Interpolation.cardinal({
-    //            tension: 0
-    //        }),
-    //        low: 0,
-    //        high: 200, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    //        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-    //    };
+       const optionsDailySalesChart = {
+           lineSmooth: Chartist.Interpolation.cardinal({
+               tension: 0
+           }),
+           low: 0,
+           high: 200, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+           chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+       };
 
-       //   const dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+         const dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
 
-       //   this.startAnimationForLineChart(dailySalesChart);
+         this.startAnimationForLineChart(dailySalesChart);
+
+       this.newUser = {
+           'smallIcon': 'decrease',
+           'percentage': '10%'
+       }
+
+       this.newMessage = {
+           'smallIcon': 'increase',
+           'percentage': '20%'
+       }
+
+
        /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 
-       //   const dataCompletedTasksChart = {
-       //       labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-       //       series: [
-       //           [230, 750, 450, 300, 280, 240, 200, 190]
-       //       ]
-       //   };
+         const dataCompletedTasksChart = {
+             labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
+             series: [
+                 [230, 750, 450, 300, 280, 240, 200, 190]
+             ]
+         };
 
-    //    const optionsCompletedTasksChart = {
-    //        lineSmooth: Chartist.Interpolation.cardinal({
-    //            tension: 0
-    //        }),
-    //        low: 0,
-    //        high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better
-    //        // look
-    //        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    //    };
+       const optionsCompletedTasksChart = {
+           lineSmooth: Chartist.Interpolation.cardinal({
+               tension: 0
+           }),
+           low: 0,
+           high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better
+           // look
+           chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+       };
 
-       //  const completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart,
-       //   optionsCompletedTasksChart);
+        const completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart,
+         optionsCompletedTasksChart);
 
-       //  this.startAnimationForLineChart(completedTasksChart);
+        this.startAnimationForLineChart(completedTasksChart);
 
-       /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
-       //   const dataWebsiteViewsChart = {
-       //     labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-       //     series: [
-       //       [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+    //    this.appService.getJson(this.simpleChartsLink).then((data) => {
+    //        //   console.log(data[0]);  //DEBUG
+    //        //initialize daily sales chart
+    //        const optionsDailySalesChart = {
+    //            lineSmooth: Chartist.Interpolation.cardinal({
+    //                tension: 0
+    //            }),
+    //            low: 0,
+    //            high: data[0]['scale'], // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    //            chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+    //        };
 
-       //     ]
-       //   };
-    //    const optionsWebsiteViewsChart = {
-    //        axisX: {
-    //            showGrid: false
-    //        },
-    //        low: 0,
-    //        high: 1000,
-    //        chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
-    //    };
-    //    const responsiveOptions: any = [
-    //        ['screen and (max-width: 640px)', {
-    //            seriesBarDistance: 5,
+    //        const dataDailySalesChart = {
+    //            labels: data[0]['labels'],
+    //            series: data[0]['series']
+    //        };
+    //        //   console.log(dataDailySalesChart);  //DEBUG
+    //        const dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+
+    //        this.startAnimationForLineChart(dailySalesChart);
+
+    //        //initialize completed tasks chart
+    //        const optionsCompletedTasksChart = {
+    //            lineSmooth: Chartist.Interpolation.cardinal({
+    //                tension: 0
+    //            }),
+    //            low: 0,
+    //            high: data[1]['scale'], // creative tim: we recommend you to set the high sa the biggest value + something for a better
+    //            // look
+    //            chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+    //        };
+
+    //        const dataCompletedTasksChart = {
+    //            labels: data[1]['labels'],
+    //            series: data[1]['series']
+    //        }
+    //        const completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart,
+    //            optionsCompletedTasksChart);
+
+    //        this.startAnimationForLineChart(completedTasksChart);
+
+    //        //initialize website views chart
+    //        const optionsWebsiteViewsChart = {
     //            axisX: {
-    //                labelInterpolationFnc: function (value) {
-    //                    return value[0];
+    //                showGrid: false
+    //            },
+    //            low: 0,
+    //            high: data[2]['scale'],
+    //            chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
+    //        };
+    //        const responsiveOptions: any = [
+    //            ['screen and (max-width: 640px)', {
+    //                seriesBarDistance: 5,
+    //                axisX: {
+    //                    labelInterpolationFnc: function (value) {
+    //                        return value[0];
+    //                    }
     //                }
-    //            }
-    //        }]
-    //    ];
-    //   const websiteViewsChart = new Chartist.Bar('#websiteViewsChart', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
+    //            }]
+    //        ];
 
-    //   this.startAnimationForBarChart(websiteViewsChart);
+    //        const dataWebsiteViewsChart = {
+    //            labels: data[2]['labels'],
+    //            series: data[2]['series']
+    //        }
+    //        const websiteViewsChart = new Chartist.Bar('#websiteViewsChart', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
 
-       this.dashboardService.getJson(this.simpleChartsLink).then((data) => {
-           //   console.log(data[0]);  //DEBUG
-           //initialize daily sales chart
-           const optionsDailySalesChart = {
-               lineSmooth: Chartist.Interpolation.cardinal({
-                   tension: 0
-               }),
-               low: 0,
-               high: data[0]['scale'], // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-               chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-           };
-
-           const dataDailySalesChart = {
-               labels: data[0]['labels'],
-               series: data[0]['series']
-           };
-           //   console.log(dataDailySalesChart);  //DEBUG
-           const dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-           this.startAnimationForLineChart(dailySalesChart);
-
-           //initialize completed tasks chart
-           const optionsCompletedTasksChart = {
-               lineSmooth: Chartist.Interpolation.cardinal({
-                   tension: 0
-               }),
-               low: 0,
-               high: data[1]['scale'], // creative tim: we recommend you to set the high sa the biggest value + something for a better
-               // look
-               chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-           };
-
-           const dataCompletedTasksChart = {
-               labels: data[1]['labels'],
-               series: data[1]['series']
-           }
-           const completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart,
-               optionsCompletedTasksChart);
-
-           this.startAnimationForLineChart(completedTasksChart);
-
-           //initialize website views chart
-           const optionsWebsiteViewsChart = {
-               axisX: {
-                   showGrid: false
-               },
-               low: 0,
-               high: data[2]['scale'],
-               chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
-           };
-           const responsiveOptions: any = [
-               ['screen and (max-width: 640px)', {
-                   seriesBarDistance: 5,
-                   axisX: {
-                       labelInterpolationFnc: function (value) {
-                           return value[0];
-                       }
-                   }
-               }]
-           ];
-
-           const dataWebsiteViewsChart = {
-               labels: data[2]['labels'],
-               series: data[2]['series']
-           }
-           const websiteViewsChart = new Chartist.Bar('#websiteViewsChart', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
-
-           this.startAnimationForBarChart(websiteViewsChart);
-       });
+    //        this.startAnimationForBarChart(websiteViewsChart);
+    //    });
    }
 
    

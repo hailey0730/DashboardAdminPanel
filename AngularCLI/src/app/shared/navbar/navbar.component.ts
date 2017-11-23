@@ -20,7 +20,8 @@ declare var $: any;
 })
 
 export class NavbarComponent implements OnInit {
-    notices: JSON[]; // = ["my first testing notification","the second one", "the last one by Hailey"];
+    notices: any[]; // = ["my first testing notification","the second one", "the last one by Hailey"];
+    // notices: JSON[]; // = ["my first testing notification","the second one", "the last one by Hailey"];
     private listTitles: any[];
     location: Location;
     private nativeElement: Node;
@@ -100,11 +101,18 @@ export class NavbarComponent implements OnInit {
         });
 
         //changing notifications for testing purpose============================================
-        this.navbarService.notificationsData().then((data) => {
-            // console.log(data);  //DEBUG
-            this.notices = data;
+        // this.navbarService.notificationsData().then((data) => {
+        //     // console.log(data);  //DEBUG
+        //     this.notices = data;
             
-        });
+        // });
+
+        this.notices = [
+            "This notification is not from server",
+            "From server works",
+            "But some problem with server now",
+            "There are more"
+        ];
         
 
     }

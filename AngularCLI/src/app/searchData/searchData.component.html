@@ -1,0 +1,218 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+            <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="blue">
+                        <i class="material-icons">timeline</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Most searched keywords
+                            <small> - Top 5</small>
+                        </h4>
+                        
+                    </div>
+                    <div class="row">
+                    <div class="col-md-9">
+                    <div id="colouredBarsChart" class="ct-chart"></div>
+                    </div>
+                    <div class="col-md-3">
+                    <!-- <div class="tim-typo"> -->
+                        <!-- <span class="tim-note">Primary Text</span> -->
+                        <h2 [class]="keyword.color" *ngFor="let keyword of keywords" [ngStyle]="{'font-size':keyword.count}">
+                            {{keyword.word}} </h2>
+                    <!-- </div>
+                    <div class="tim-typo"> -->
+                        <!-- <h2 class="text-info" style="font-size:2.5em;">
+                            test keyword </h2> -->
+                    <!-- </div>
+                    <div class="tim-typo"> -->
+                        <!-- <h2 class="text-success" style="font-size:2.8em;">
+                            test keyword </h2> -->
+                    <!-- </div>
+                    <div class="tim-typo"> -->
+                        <!-- <h2 class="text-warning" style="font-size:1.5em;">
+                            test keyword
+                        </h2> -->
+                    <!-- </div>
+                    <div class="tim-typo"> -->
+                        <!-- <h2 class="text-danger" style="font-size:1.8em;">
+                            test keyword </h2> -->
+                    <!-- </div> -->
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header card-header-icon" data-background-color="rose">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="card-title">Most asked questions</h4>
+                            <div class="content table-responsive">
+                                <table class="table">
+                                    <thead class="text-primary">
+                                        <tr>
+                                            <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of tableData2.dataRows">
+                                            <td>{{row[0]}}</td>
+                                            <td class="text-primary">{{row[1]}}</td>
+                    
+                                        </tr>
+                                    </tbody>
+                                </table>
+                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header card-header-icon" data-background-color="blue">
+                            <i class="material-icons">timeline</i>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="card-title">Coloured Bars Chart
+                                <small> - Rounded</small>
+                            </h4>
+                    
+                        </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div id="colouredBarsChart2" class="ct-chart"></div>
+                                </div>
+                                <div class="col-md-3">
+                                    <!-- <div class="tim-typo"> -->
+                                    <!-- <span class="tim-note">Primary Text</span> -->
+                                    <p class="text-danger">
+                                        make appointment </p>
+                                    <!-- </div>
+                                                <div class="tim-typo"> -->
+                                    <p class="text-info">
+                                        ask for open hours </p>
+                                        </div>
+                                        </div>
+                        
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header card-header-icon" data-background-color="rose">
+                                    <i class="material-icons">assignment</i>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="card-title">Top 30 keywords</h4>
+                                    <div class="content table-responsive">
+                                        <table class="table">
+                                            <thead class="text-primary">
+                                                <tr>
+                                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of tableData2.dataRows">
+                                                    <td>{{row[0]}}</td>
+                                                    <td class="text-primary">{{row[1]}}</td>
+                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header card-header-icon" data-background-color="rose">
+                                    <i class="material-icons">assignment</i>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="card-title">Top 30 keywords</h4>
+                                    <div class="content table-responsive">
+                                        <table class="table">
+                                            <thead class="text-primary">
+                                                <tr>
+                                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of tableData2.dataRows">
+                                                    <td>{{row[0]}}</td>
+                                                    <td class="text-primary">{{row[1]}}</td>
+                        
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+            
+
+            <div class="col-md-3" >
+                <div class="card">
+                    <!-- <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">assignment</i>
+                    </div> -->
+                    <div class="card-content">
+                        <h4 class="card-title">Top 30 keywords</h4>
+                        <div class="content table-responsive">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <tr>
+                                        <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of tableData1.dataRows">
+                                        <td>{{row[0]}}</td>
+                                        <td class="text-primary">{{row[1]}}</td>
+                
+                                    </tr>
+                                </tbody>
+                            </table>
+                
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">insert_chart</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Tracking conversation
+                            <!-- <small>- Bar Chart</small> -->
+                        </h4>
+                    </div>
+                    <div id="multipleBarsChart" class="ct-chart"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

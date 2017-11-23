@@ -23,7 +23,17 @@ export interface ChildrenItems {
 //Menu Items
 export const ROUTES: RouteInfo[] = [{
         path: '/dashboard',
-        title: 'Dashboard',
+        title: '用戶數據',
+        type: 'link',
+        icontype: 'face'
+}, {
+    path: '/searchData',
+    title: '查詢數據',
+    type: 'link',
+    icontype: 'search'
+    }, {
+        path: '/otherData',
+        title: '其他數據',
         type: 'link',
         icontype: 'dashboard'
     }];
