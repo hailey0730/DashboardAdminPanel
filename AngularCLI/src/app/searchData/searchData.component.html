@@ -9,8 +9,8 @@
                         <i class="material-icons">timeline</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">Most searched keywords
-                            <small> - Top 5</small>
+                        <h4 class="card-title">最常搜尋關鍵字
+                            <small> - 頭 5 名</small>
                         </h4>
                         
                     </div>
@@ -23,24 +23,8 @@
                         <!-- <span class="tim-note">Primary Text</span> -->
                         <h2 [class]="keyword.color" *ngFor="let keyword of keywords" [ngStyle]="{'font-size':keyword.count}">
                             {{keyword.word}} </h2>
-                    <!-- </div>
-                    <div class="tim-typo"> -->
-                        <!-- <h2 class="text-info" style="font-size:2.5em;">
-                            test keyword </h2> -->
-                    <!-- </div>
-                    <div class="tim-typo"> -->
-                        <!-- <h2 class="text-success" style="font-size:2.8em;">
-                            test keyword </h2> -->
-                    <!-- </div>
-                    <div class="tim-typo"> -->
-                        <!-- <h2 class="text-warning" style="font-size:1.5em;">
-                            test keyword
-                        </h2> -->
-                    <!-- </div>
-                    <div class="tim-typo"> -->
-                        <!-- <h2 class="text-danger" style="font-size:1.8em;">
-                            test keyword </h2> -->
-                    <!-- </div> -->
+                    <!-- </div>-->
+                    
                     </div>
                     </div>
                 </div>
@@ -54,8 +38,8 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="card-content">
-                            <h4 class="card-title">Most asked questions</h4>
-                            <div class="content table-responsive">
+                            <h4 class="card-title">最常查詢問題</h4>
+                            <div class="content table-responsive" *ngIf="tableData2 != null">
                                 <table class="table">
                                     <thead class="text-primary">
                                         <tr>
@@ -81,8 +65,8 @@
                             <i class="material-icons">timeline</i>
                         </div>
                         <div class="card-content">
-                            <h4 class="card-title">Coloured Bars Chart
-                                <small> - Rounded</small>
+                            <h4 class="card-title">
+                                <!-- <small> - Rounded</small> -->
                             </h4>
                     
                         </div>
@@ -93,12 +77,12 @@
                                 <div class="col-md-3">
                                     <!-- <div class="tim-typo"> -->
                                     <!-- <span class="tim-note">Primary Text</span> -->
-                                    <p class="text-danger">
-                                        make appointment </p>
+                                    <p class="text-info">
+                                        查詢診所時間 </p>
                                     <!-- </div>
                                                 <div class="tim-typo"> -->
-                                    <p class="text-info">
-                                        ask for open hours </p>
+                                    <p class="text-danger">
+                                        預約醫生 </p>
                                         </div>
                                         </div>
                         
@@ -113,16 +97,16 @@
                                     <i class="material-icons">assignment</i>
                                 </div>
                                 <div class="card-content">
-                                    <h4 class="card-title">Top 30 keywords</h4>
-                                    <div class="content table-responsive">
+                                    <h4 class="card-title">不能處理的字句</h4>
+                                    <div class="content table-responsive" *ngIf="tableData3 != null">
                                         <table class="table">
                                             <thead class="text-primary">
                                                 <tr>
-                                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                                    <th *ngFor="let cell of tableData3.headerRow">{{ cell }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let row of tableData2.dataRows">
+                                                <tr *ngFor="let row of tableData3.dataRows">
                                                     <td>{{row[0]}}</td>
                                                     <td class="text-primary">{{row[1]}}</td>
                     
@@ -140,16 +124,16 @@
                                     <i class="material-icons">assignment</i>
                                 </div>
                                 <div class="card-content">
-                                    <h4 class="card-title">Top 30 keywords</h4>
-                                    <div class="content table-responsive">
+                                    <h4 class="card-title">收到的回饋</h4>
+                                    <div class="content table-responsive" *ngIf="tableData4 != null">
                                         <table class="table">
                                             <thead class="text-primary">
                                                 <tr>
-                                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                                    <th *ngFor="let cell of tableData4.headerRow">{{ cell }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let row of tableData2.dataRows">
+                                                <tr *ngFor="let row of tableData4.dataRows">
                                                     <td>{{row[0]}}</td>
                                                     <td class="text-primary">{{row[1]}}</td>
                         
@@ -172,7 +156,7 @@
                         <i class="material-icons">assignment</i>
                     </div> -->
                     <div class="card-content">
-                        <h4 class="card-title">Top 30 keywords</h4>
+                        <h4 class="card-title">頭 30 名 關鍵字</h4>
                         <div class="content table-responsive">
                             <table class="table">
                                 <thead class="text-primary">
@@ -205,7 +189,7 @@
                         <i class="material-icons">insert_chart</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">Tracking conversation
+                        <h4 class="card-title">追蹤對話
                             <!-- <small>- Bar Chart</small> -->
                         </h4>
                     </div>

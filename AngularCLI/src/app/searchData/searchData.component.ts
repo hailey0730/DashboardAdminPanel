@@ -22,12 +22,14 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
 
     }
     // constructor(private navbarTitleService: NavbarTitleService, private notificationService: NotificationService) { }
-    public tableData: TableData;
     public conversations: any[];
     public tableData1: TableData;
     public tableData2: TableData;
+    public tableData3: TableData;
+    public tableData4: TableData;
     public keywords: any[];
     private testlink = "http://hayhay0730.000webhostapp.com/test.php";
+    private testTable = "http://hayhay0730.000webhostapp.com/testTable.php";
     //   private testlink = "http://www.drcare.ai/php/test.php";
     private simpleChartsLink = "http://hayhay0730.000webhostapp.com/simpleCharts.php";
     private usersDataLink = "http://hayhay0730.000webhostapp.com/loadUsersConv.php";
@@ -91,7 +93,100 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
     // constructor(private navbarTitleService: NavbarTitleService) { }
     public ngOnInit() {
 
-        /*  **************** Coloured Rounded Line Chart - Line Chart ******************** */
+        this.loadCharts();
+
+        // //initialize conversation block========================================
+        // this.appService.getJson(this.conversationLink).then((data) => {
+        //     this.conversations = data;
+        // });
+
+        this.loadTables();
+        
+    }
+
+    ngAfterViewInit() {
+        //  Activate the tooltips
+        $('[rel="tooltip"]').tooltip();
+    }
+
+    hasLink(figure): boolean {
+        var bool = false;
+        if (figure.optionalLink) {
+            bool = true;
+        }
+        return bool;
+    }
+
+    loadTables(){
+        this.appService.getJson(this.testTable).then((data) => {
+        this.tableData1 = {
+            headerRow: ['關鍵字', '數量'],
+            dataRows: [
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100'],
+                ['test keyword', ' 100']
+            ]
+        };
+
+        console.log(data);
+
+        this.tableData2 = {
+            headerRow: data['headerRow'],
+            dataRows: data['dataRows']
+        }
+
+        this.tableData3 = {
+            headerRow: data['headerRow'],
+            dataRows: data['dataRows']
+        }
+
+        this.tableData4 = {
+            headerRow: data['headerRow'],
+            dataRows: data['dataRows']
+        }
+    });
+
+    }
+
+    loadCharts(){
+
+        this.appService.getJson(this.simpleChartsLink).then((data) => {
+
+        /*  **************** most searched keywords - Line Chart ******************** */
+        this.keywords = [
+            { 'word': 'Fever', 'count': '1em', 'color': 'text-primary' },
+            { 'word': 'sick', 'count': '2em', 'color': 'text-info' },
+            { 'word': 'diarrhea', 'count': '3.4em', 'color': 'text-success' },
+            { 'word': 'dizzy', 'count': '1.2em', 'color': 'text-warning' },
+            { 'word': 'stomache', 'count': '1.5em', 'color': 'text-danger' }
+        ];
 
         const dataColouredBarsChart = {
             labels: ['\'06', '\'07', '\'08', '\'09', '\'10', '\'11', '\'12', '\'13', '\'14', '\'15'],
@@ -127,14 +222,11 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
 
         this.startAnimationForLineChart(colouredBarsChart);
 
-        /*  **************** Coloured Rounded Line Chart - Line Chart2 ******************** */
+        /*  **************** appointment & open hours - Line Chart2 ******************** */
 
         const dataColouredBarsChart2 = {
-            labels: ['\'06', '\'07', '\'08', '\'09', '\'10', '\'11', '\'12', '\'13', '\'14', '\'15'],
-            series: [
-                [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944],
-                [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647]
-            ]
+            labels: data[0]['labels'],
+            series: data[0]['series']
         };
 
         const optionsColouredBarsChart2: any = {
@@ -149,7 +241,7 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
                 showGrid: false,
             },
             low: 0,
-            high: 1000,
+            high: data[0]['series'],
             showPoint: true,
             height: '300px'
         };
@@ -160,73 +252,9 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
 
         this.startAnimationForLineChart(colouredBarsChart2);
 
-
-
-        // //initialize conversation block========================================
-        // this.appService.getJson(this.conversationLink).then((data) => {
-        //     this.conversations = data;
-        // });
-
-
-        this.keywords = [
-            { 'word': 'Fever', 'count': '1em', 'color':'text-primary'},
-            { 'word': 'sick', 'count': '2em', 'color':'text-info'},
-            { 'word': 'diarrhea', 'count': '3.4em', 'color':'text-success'},
-            { 'word': 'dizzy', 'count': '1.2em', 'color':'text-warning'},
-            { 'word': 'stomache', 'count': '1.5em', 'color':'text-danger'}
-        ];
-
-
-        this.tableData1 = {
-            headerRow: ['Name', 'Salary'],
-            dataRows: [
-                ['Dakota Rice', 'Niger', 'Oud-Turnhout', '$36,738'],
-                ['Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-                ['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-                ['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-                ['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-                ['Mason Porter', 'Chile', 'Gloucester', '$78,615'],
-                ['Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-                ['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-                ['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-                ['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-                ['Mason Porter', 'Chile', 'Gloucester', '$78,615'],
-                ['Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-                ['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-                ['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-                ['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-                ['Mason Porter', 'Chile', 'Gloucester', '$78,615'],
-                ['Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-                ['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-                ['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-                ['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-                ['Mason Porter', 'Chile', 'Gloucester', '$78,615'],
-                ['Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-                ['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-                ['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-                ['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-                ['Mason Porter', 'Chile', 'Gloucester', '$78,615'],
-                ['Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-                ['Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-                ['Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-                ['Mason Porter', 'Chile', 'Gloucester', '$78,615']
-            ]
-        };
-
-        this.tableData2 = {
-            headerRow:['Most asked Questions', 'count'],
-            dataRows:[
-                ['how are you?', '100'],
-                ['how are you?', '99'],
-                ['how are you?', '95'],
-                ['how are you?', '80'],
-                ['how are you?', '76']
-            ]
-        }
-
-
+        // ======================tracking conversation - Bar chart==========================
         const dataMultipleBarsChart = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: ['開始使用', '診所時間', '預約醫生', '醫療知識查詢', '其他', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             series: [
                 [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
             ]
@@ -257,48 +285,8 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         // start animation for the Emails Subscription Chart
         this.startAnimationForBarChart(multipleBarsChart);
 
+    });
 
-    }
-
-    ngAfterViewInit() {
-        const breakCards = true;
-        if (breakCards === true) {
-            // We break the cards headers if there is too much stress on them :-)
-            $('[data-header-animation="true"]').each(function () {
-                const $fix_button = $(this);
-                const $card = $(this).parent('.card');
-                $card.find('.fix-broken-card').click(function () {
-                    const $header = $(this).parent().parent().siblings('.card-header, .card-image');
-                    $header.removeClass('hinge').addClass('fadeInDown');
-
-                    $card.attr('data-count', 0);
-
-                    setTimeout(function () {
-                        $header.removeClass('fadeInDown animate');
-                    }, 480);
-                });
-
-                $card.mouseenter(function () {
-                    const $this = $(this);
-                    const hover_count = parseInt($this.attr('data-count'), 10) + 1 || 0;
-                    $this.attr('data-count', hover_count);
-                    //    if (hover_count >= 20) {
-                    //        $(this).children('.card-header, .card-image').addClass('hinge animated');
-                    //    }
-                });
-            });
-        }
-        //  Activate the tooltips
-        $('[rel="tooltip"]').tooltip();
-    }
-
-    hasLink(figure): boolean {
-        var bool = false;
-        if (figure.optionalLink) {
-            bool = true;
-        }
-        return bool;
-    }
-
+}
 
 }

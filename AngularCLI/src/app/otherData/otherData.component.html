@@ -12,9 +12,17 @@
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons text-danger">{{figure.smallIcon}}</i>
-                            <a *ngIf="hasLink(figure);else noLink" href="{{figure.optionalLink}}">{{figure.smallText}}</a>
-                            <ng-template #noLink>{{figure.smallText}}</ng-template>
+                            <p class="category" *ngIf='figure.smallText != ""'>
+                                <span *ngIf="figure.smallIcon == 'increase'; else decrease" class="text-success">
+                                    <i class="fa fa-long-arrow-up"></i> {{figure.smallText}} </span>
+                                <ng-template #decrease>
+                                    <span class="text-danger">
+                                        <i class="fa fa-long-arrow-down"></i> {{figure.smallText}} </span>
+                                </ng-template>
+                            </p>
+                            <!-- <i class="material-icons text-success">{{figure.smallIcon}}</i>
+                                                    <a *ngIf="figure.optionalLink != '';else noLink" href="{{figure.optionalLink}}">{{figure.smallText}}</a>
+                                                    <ng-template #noLink>{{figure.smallText}}</ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -28,13 +36,13 @@
                         <i class="material-icons">pie_chart</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">User Gender</h4>
+                        <h4 class="card-title">用戶性別</h4>
                     </div>
                     <div id="chartPreferences" class="ct-chart"></div>
                     <div class="card-footer">
                         <h6>Legend</h6>
-                        <i class="fa fa-circle text-info"></i> Male
-                        <i class="fa fa-circle text-danger"></i> Female
+                        <i class="fa fa-circle text-info"></i> 男
+                        <i class="fa fa-circle text-danger"></i> 女
                     </div>
                 </div>
             </div>
@@ -44,14 +52,14 @@
                         <i class="material-icons">pie_chart</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">User Region</h4>
+                        <h4 class="card-title">用戶地區</h4>
                     </div>
                     <div id="chartPreferences2" class="ct-chart"></div>
                     <div class="card-footer">
                         <h6>Legend</h6>
                         <i class="fa fa-circle text-info"></i> Kowloon
-                        <i class="fa fa-circle text-warning"></i> New Territories
-                        <i class="fa fa-circle text-danger"></i> Hong Kong Island
+                        <i class="fa fa-circle text-danger"></i> New Territories
+                        <i class="fa fa-circle text-warning"></i> Hong Kong Island
                     </div>
                 </div>
             </div>
@@ -66,7 +74,7 @@
                         <i class="material-icons">insert_chart</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">Tracking conversation
+                        <h4 class="card-title">重用用戶
                             <!-- <small>- Bar Chart</small> -->
                         </h4>
                     </div>

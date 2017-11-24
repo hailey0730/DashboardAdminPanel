@@ -92,35 +92,41 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
     // constructor(private navbarTitleService: NavbarTitleService) { }
     public ngOnInit() {
 
-        this.figures = [
-          {
-              "backgroundColor": "blue",
-              "bigIcon": "accessibility",
-              "category": "Accessibility",
-              "number": "1000",
-              "smallIcon": "done",
-              "smallText": "healthy people",
-              "optionalLink": ""
-          },
-          {
-              "backgroundColor": "orange",
-              "bigIcon": "accessibility",
-              "category": "Accessibility",
-              "number": "1000",
-              "smallIcon": "done",
-              "smallText": "healthy people",
-              "optionalLink": ""
-          },
-          {
-              "backgroundColor": "purple",
-              "bigIcon": "accessibility",
-              "category": "Accessibility",
-              "number": "1000",
-              "smallIcon": "warning",
-              "smallText": "test link",
-              "optionalLink": "www.google.com"
-          }
-        ];
+        this.appService.getJson(this.testlink).then((data) => {
+           
+            this.figures = data;
+            this.figures.splice(3, 1);
+        });
+
+        // this.figures = [
+        //   {
+        //       "backgroundColor": "blue",
+        //       "bigIcon": "accessibility",
+        //       "category": "Accessibility",
+        //       "number": "1000",
+        //       "smallIcon": "done",
+        //       "smallText": "healthy people",
+        //       "optionalLink": ""
+        //   },
+        //   {
+        //       "backgroundColor": "orange",
+        //       "bigIcon": "accessibility",
+        //       "category": "Accessibility",
+        //       "number": "1000",
+        //       "smallIcon": "done",
+        //       "smallText": "healthy people",
+        //       "optionalLink": ""
+        //   },
+        //   {
+        //       "backgroundColor": "purple",
+        //       "bigIcon": "accessibility",
+        //       "category": "Accessibility",
+        //       "number": "1000",
+        //       "smallIcon": "warning",
+        //       "smallText": "test link",
+        //       "optionalLink": "www.google.com"
+        //   }
+        // ];
 
         /*  **************** Coloured Rounded Line Chart - Line Chart ******************** */
 
@@ -199,7 +205,7 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         // });
 
 
-        /*  **************** Public Preferences - Pie Chart ******************** */
+        /*  **************** User Gender - Pie Chart ******************** */
 
         const dataPreferences = {
             labels: ['62%', '38%'],
@@ -213,11 +219,13 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         new Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
 
 
-        /*  **************** Public Preferences - Pie Chart2 ******************** */
+        /*  **************** User Region - Pie Chart2 ******************** */
 
         const dataPreferences2 = {
             labels: ['62%', '32%', '6%'],
             series: [62, 32, 6]
+            //  labels: ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%'],
+            // series: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
         };
 
         const optionsPreferences2 = {
