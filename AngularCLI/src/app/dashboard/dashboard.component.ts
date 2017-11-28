@@ -10,8 +10,7 @@ declare const $: any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./css/ace.min.css', './css/bootstrap.min.css', './css/conversation.css'],
-//   styleUrls: ['./css/conversation.css'],
+  styleUrls: ['./css/conversation.css'],
   providers: [
       appService
   ] 
@@ -104,7 +103,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //   });
     
       //test plug in charts data from server===============================================
-      console.log("call loadSimpleCharts from OnInit");
       this.loadSimpleCharts();
       
          //testing get json from appService=================================
@@ -231,9 +229,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
            "Time": (new Date).toLocaleTimeString()
         };
    
-       console.log(newMessage);
        this.conversations.push(newMessage);
-        console.log(this.conversations);
     //    this.appService.postJson('http://hayhay0730.000webhostapp.com/conversation.json', this.conversations);
    }
 
@@ -340,7 +336,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
        this.appService.getJson(this.simpleChartsLink).then((data) => {
-             console.log(data[0]);  //DEBUG
+            //  console.log(data[0]);  //DEBUG
 
            const dataColouredBarsChart = {
                labels: data[0]['labels'],

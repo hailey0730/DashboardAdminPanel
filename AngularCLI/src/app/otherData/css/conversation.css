@@ -1,0 +1,67 @@
+.btn:not(.btn-just-icon):not(.btn-fab) .fa, .navbar .navbar-nav > li > a.btn:not(.btn-just-icon):not(.btn-fab) .fa {
+    font-size: 14px;
+}
+
+.itemdiv[_ngcontent-c0] .body[_ngcontent-c0] .tools[_ngcontent-c0] {
+    bottom: 2px;
+}
+
+.itemdiv.dialogdiv[_ngcontent-c0] > .body.Admin[_ngcontent-c0]:before {
+    display: block;
+    left: 1em;
+    top: 11px;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #DDE4ED;
+    border-width: 0 2px 2px 0;
+    background-color: #FFF;
+    box-sizing: content-box;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: relative;
+    float: right;
+}
+
+.itemdiv[_ngcontent-c0] > .body.Admin[_ngcontent-c0] {
+    width: auto;
+    margin-left: 0px;
+    margin-right: 50px;
+    position: relative;
+}
+
+.itemdiv[_ngcontent-c0] > .user.right[_ngcontent-c0] {
+    display: inline-block;
+    width: 42px;
+    position: relative;
+    left: auto;
+    top:-55px;
+    float: right;
+}
+
+.tools{
+    cursor: pointer;
+}
+
+.scroll-content{
+    max-height: 40em;
+    overflow-y: scroll;
+}
+
+.scroll-content::-webkit-scrollbar{
+    width: 10px;
+}
+
+.scroll-content::-webkit-scrollbar-track{
+	-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+
+.scroll-content::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); */
+    background-color: rgba(0,0,0,0.2);
+}
+
+.custom{
+    border-radius: 10px;
+}

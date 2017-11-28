@@ -74,13 +74,142 @@
                         <i class="material-icons">insert_chart</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">重用用戶
+                        <h4 class="card-title">回歸用戶
                             <!-- <small>- Bar Chart</small> -->
                         </h4>
                     </div>
                     <div id="multipleBarsChart" class="ct-chart"></div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">回歸用戶2</h4>
+                        <div class="content table-responsive" *ngIf="tableData != null">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <tr>
+                                        <th *ngFor="let cell of tableData.headerRow">{{ cell }}</th> <!-- should show days -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of tableData.dataRows; let $index = index;">
+                                        <td>{{'week'+$index }}</td>       <!-- should show weeks -->
+                                        <td class="{{classList[$index][0]}}">{{row[0]}}</td>       <!-- should show colors/percent -->
+                                        <td class="{{classList[$index][1]}}">{{row[1]}}</td>        <!--{{percentList[$index][1]}}-->
+                                        <td class="{{classList[$index][2]}}">{{row[2]}}</td>
+                                        <td class="{{classList[$index][3]}}">{{row[3]}}</td>
+                                        <td class="{{classList[$index][4]}}">{{row[4]}}</td>
+                                        <td class="{{classList[$index][5]}}">{{row[5]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title lighter smaller">
+                            <i class="ace-icon fa fa-comment blue"></i>
+                            問答統計
+                        </h4>
+                        <div class="widget-toolbar">
+                            <button type="button" class="btn btn-info btn-simple custom" rel="tooltip" data-placement="bottom" title="Refresh" (click)="refresh();">
+                                <i class="material-icons">refresh</i>
+                            </button>
+                        </div>
+                    </div>
+        
+                    <div class="widget-body" *ngIf="conversations != null">
+                        <div class="widget-main no-padding">
+                            <div class="scroll-content">
+                                <div class="dialogs" *ngFor="let conv of conversations;">
+        
+                                    <div class="itemdiv dialogdiv" *ngIf="conv.Name == adminName;else notAdmin">
+        
+                                        <div class="body Admin">
+                                            <div class="time">
+                                                            <i class="ace-icon fa fa-clock-o"></i>
+                                                            <span class="red">{{conv.Time}}</span>
+                                                        </div>
+        
+                                            <div class="name">
+                                                <a>{{conv.Name}}</a>
+                                                <span class="label label-info arrowed arrowed-in-right">chatbot</span>
+                                            </div>
+                                            <div class="text">{{conv.Comment}}</div>
+        
+                                        </div>
+        
+                                        <div class="user right">
+                                            <img alt="Bob's Avatar" src="{{conv.ImgUrl}}" />
+                                        </div>
+                                    </div>
+        
+                                    <ng-template #notAdmin>
+                                        <div class="itemdiv dialogdiv">
+                                            <div class="user">
+                                                <img alt="Alex's Avatar" src="{{conv.ImgUrl}}" />
+                                            </div>
+        
+                                            <div class="body">
+                                                <div class="time">
+                                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                                <span class="blue">{{conv.Time}}</span>
+                                                            </div>
+        
+                                                <div class="name">
+                                                    <a>{{conv.Name}}</a>
+                                                </div>
+                                                <div class="text">{{conv.Comment}}</div>
+        
+                                                <div class="tools">
+                                                                <a (click)="reply(conv.Name, conv.Comment)" class="btn btn-minier btn-info">
+                                                                    <i class="icon-only ace-icon fa fa-share"></i>
+                                                                </a>
+                                                            </div>
+                                            </div>
+                                        </div>
+        
+                                    </ng-template>
+        
+                                </div>
+                            </div>
+        
+                            <form>
+                                                <div class="form-actions">
+                                                    <div class="input-group">
+                                                        <input placeholder="Type your message here ..." type="textarea" rows="3" class="form-control message" name="message" />
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-sm btn-info no-radius" type="button" (click)="sendMessage()">
+                                                                <i class="ace-icon fa fa-share"></i>
+                                                                Send
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                        </div>
+                        <!-- /.widget-main -->
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-box -->
+            </div>
+            <!-- /.col -->
         </div>
 
     </div>

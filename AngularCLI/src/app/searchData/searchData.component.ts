@@ -4,15 +4,15 @@ import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
 
 import * as Chartist from 'chartist';
 import { appService } from '../app.service'
-// import { Observable } from "rxjs/Observable";
+
 declare const $: any;
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './searchData.component.html',
     // styleUrls: ['./css/ace.min.css', './css/bootstrap.min.css', './css/conversation.css'],
-    //   styleUrls: ['./css/conversation.css'],
-      styleUrls: ['./css/searchData.css'],
+    styleUrls: ['./css/searchData.css'],      
+    // styleUrls: ['../../assets/css/searchData.css', '../../assets/css/ace.min.css', '../../assets/css/bootstrap.min.css', '../../assets/css/conversation.css'],
     providers: [
         appService
     ]
@@ -27,12 +27,11 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
     public tableData2: TableData;
     public tableData3: TableData;
     public tableData4: TableData;
-    public keywords: any[];
+    public keywords: any[] = [];
     private testlink = "http://hayhay0730.000webhostapp.com/test.php";
     private testTable = "http://hayhay0730.000webhostapp.com/testTable.php";
     //   private testlink = "http://www.drcare.ai/php/test.php";
     private simpleChartsLink = "http://hayhay0730.000webhostapp.com/simpleCharts.php";
-    private usersDataLink = "http://hayhay0730.000webhostapp.com/loadUsersConv.php";
     private conversationLink = "http://hayhay0730.000webhostapp.com/conversation.php";
 
     startAnimationForLineChart(chart: any) {
@@ -92,6 +91,7 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
     }
     // constructor(private navbarTitleService: NavbarTitleService) { }
     public ngOnInit() {
+        
 
         this.loadCharts();
 
@@ -109,13 +109,37 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         $('[rel="tooltip"]').tooltip();
     }
 
-    hasLink(figure): boolean {
-        var bool = false;
-        if (figure.optionalLink) {
-            bool = true;
+    highlight(event){
+        $(event.target).css('font-weight','bold');
+        // console.log($(event.target).attr('class'));     //DEBUG
+        var color = $(event.target).attr('class');
+        switch(color){
+            case 'text-info':
+                // console.log('info');     //DEBUG
+                $('#colouredBarsChart > svg > g > g:first-child > .ct-line').css('stroke-width','5px');
+                break;
+            case 'text-danger':
+                $('#colouredBarsChart > svg > g > g:nth-child(2) > .ct-line').css('stroke-width', '5px');
+                break;
+            case 'text-warning':
+                $('g > g:nth-child(3) > .ct-line').css('stroke-width', '5px');
+                break;
+            case 'text-primary':
+                $('g > g:nth-child(4) > .ct-line').css('stroke-width', '5px');
+                break;
+            case 'text-success':
+                $('g > g:nth-child(5) > .ct-line').css('stroke-width', '5px');
+                break;
         }
-        return bool;
+
     }
+
+    noHighlight(event){
+        // console.log('mouse leave');      //DEBUG
+        $(event.target).css('font-weight','100');
+        $('.ct-line').css('stroke-width', '3px');
+    }
+
 
     loadTables(){
         this.appService.getJson(this.testTable).then((data) => {
@@ -155,7 +179,7 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
             ]
         };
 
-        console.log(data);
+        // console.log(data);      //DEBUG
 
         this.tableData2 = {
             headerRow: data['headerRow'],
@@ -163,13 +187,21 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         }
 
         this.tableData3 = {
-            headerRow: data['headerRow'],
-            dataRows: data['dataRows']
+            headerRow: ['關鍵字', '數量'],
+            dataRows: [['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100']]
         }
 
         this.tableData4 = {
-            headerRow: data['headerRow'],
-            dataRows: data['dataRows']
+            headerRow: ['關鍵字', '數量'],
+            dataRows: [['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100']]
         }
     });
 
@@ -181,21 +213,21 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
 
         /*  **************** most searched keywords - Line Chart ******************** */
         this.keywords = [
-            { 'word': 'Fever', 'count': '1em', 'color': 'text-primary' },
-            { 'word': 'sick', 'count': '2em', 'color': 'text-info' },
-            { 'word': 'diarrhea', 'count': '3.4em', 'color': 'text-success' },
-            { 'word': 'dizzy', 'count': '1.2em', 'color': 'text-warning' },
-            { 'word': 'stomache', 'count': '1.5em', 'color': 'text-danger' }
+            { 'word': 'sick', 'count': '2em', 'color': 'text-info' },           //blue
+            { 'word': 'stomache', 'count': '1.5em', 'color': 'text-danger' },    //red
+            { 'word': 'dizzy', 'count': '1.2em', 'color': 'text-warning' },     //orange
+            { 'word': 'Fever', 'count': '1em', 'color': 'text-primary' },       //purple
+            { 'word': 'diarrhea', 'count': '3.4em', 'color': 'text-success' }  //green
         ];
 
         const dataColouredBarsChart = {
             labels: ['\'06', '\'07', '\'08', '\'09', '\'10', '\'11', '\'12', '\'13', '\'14', '\'15'],
             series: [
-                [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944],        //blue
-                [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647],         //red
-                [23, 113, 67, 190, 239, 307, 308, 439, 410, 410, 509],          //orange
-                [31, 103, 67, 19, 39, 307, 380, 439, 410, 410, 59],             //purple
-                [23, 13, 670, 109, 29, 70, 30, 309, 40, 410, 900]               //green
+                {'name': 'Fever','data': [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944]},        //blue
+                {'name': 'sick','data': [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647]},         //red
+                {'name': 'diarrhea','data': [23, 113, 67, 190, 239, 307, 308, 439, 410, 410, 509]} ,      //orange
+                {'name': 'dizzy','data': [31, 103, 67, 19, 39, 307, 380, 439, 410, 410, 59]},       //purple
+                {'name': 'stomache','data': [23, 13, 670, 109, 29, 70, 30, 309, 40, 410, 900]}        //green
             ]
         };
 
@@ -213,9 +245,14 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
             low: 0,
             high: 1000,
             showPoint: true,
-            height: '300px'
+            width: '100%',
+            height: '300px',
+            fullWidth: true,
+            chartPadding: {
+                right: 40
+            } 
+            
         };
-
 
         const colouredBarsChart = new Chartist.Line('#colouredBarsChart', dataColouredBarsChart,
             optionsColouredBarsChart);
@@ -244,6 +281,7 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
             high: data[0]['series'],
             showPoint: true,
             height: '300px'
+           
         };
 
 
@@ -252,6 +290,8 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
 
         this.startAnimationForLineChart(colouredBarsChart2);
 
+        
+           
         // ======================tracking conversation - Bar chart==========================
         const dataMultipleBarsChart = {
             labels: ['開始使用', '診所時間', '預約醫生', '醫療知識查詢', '其他', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

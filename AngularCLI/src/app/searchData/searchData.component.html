@@ -18,13 +18,9 @@
                     <div class="col-md-9">
                     <div id="colouredBarsChart" class="ct-chart"></div>
                     </div>
-                    <div class="col-md-3">
-                    <!-- <div class="tim-typo"> -->
-                        <!-- <span class="tim-note">Primary Text</span> -->
-                        <h2 [class]="keyword.color" *ngFor="let keyword of keywords" [ngStyle]="{'font-size':keyword.count}">
+                    <div class="col-md-3" *ngFor="let keyword of keywords">  
+                        <h2 *ngIf="keyword.color != ''" class="{{keyword.color}}"  [ngStyle]="{'font-size':keyword.count}" (mouseover)="highlight($event)" (mouseout)="noHighlight($event)">
                             {{keyword.word}} </h2>
-                    <!-- </div>-->
-                    
                     </div>
                     </div>
                 </div>
@@ -158,7 +154,7 @@
                     <div class="card-content">
                         <h4 class="card-title">頭 30 名 關鍵字</h4>
                         <div class="content table-responsive">
-                            <table class="table">
+                            <table class="table" *ngIf="tableData1 != null">
                                 <thead class="text-primary">
                                     <tr>
                                         <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
@@ -182,21 +178,23 @@
         </div>
 
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="rose">
                         <i class="material-icons">insert_chart</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">追蹤對話
+                        <h4 class="card-title">追蹤對話 -->
                             <!-- <small>- Bar Chart</small> -->
-                        </h4>
+                        <!-- </h4>
                     </div>
                     <div id="multipleBarsChart" class="ct-chart"></div>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        
 
     </div>
 </div>

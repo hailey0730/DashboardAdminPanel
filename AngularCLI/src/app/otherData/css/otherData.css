@@ -1,0 +1,49 @@
+.dark100{
+    background-color: #01172c;
+    color: white;
+}
+
+.dark90{
+    background-color: #02315e;
+    color: white;
+}
+
+.dark80{
+    background-color: #034f96;
+    color: white;
+}
+
+.dark70{
+    background-color: #046dc9;
+    color: white;
+}
+
+.dark60{
+    background-color: #0485f5;
+    color: white;
+}
+
+.dark50{
+    background-color: #2395f1;
+    color: white;
+}
+
+.light40{
+    background-color: #42a0e9;
+    color: white;
+}
+
+.light30{
+    background-color: #66b4f0;
+    color: white;
+}
+
+.light20{
+    background-color: #90c7f1;
+    color: black;
+}
+
+.light10{
+    background-color: #c1e1f8;
+    color: black;
+}
