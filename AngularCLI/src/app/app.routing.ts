@@ -22,6 +22,9 @@ export const AppRoutes: Routes = [
     }, {
         path: '',
         loadChildren: './otherData/otherData.module#OtherDataModule'
+    }, {
+      path: '',
+      loadChildren: './fallback/fallback.module#FallbackModule'
     }
 
     // , {

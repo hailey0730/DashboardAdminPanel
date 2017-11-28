@@ -1,5 +1,17 @@
 <div class="main-content">
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                 <my-date-range-picker [options]="myDateRangePickerOptions" (dateRangeChanged)="onDateRangeChanged($event)" placeholder='{{beginDate.day}}.{{beginDate.month}}.{{beginDate.year}}'></my-date-range-picker>
+
+                <button class="btn btn-primary btn-round" style="vertical-align: text-bottom;" (click)="showOverall()">累積總數</button>
+            </div>
+            <div class="col-md-6">
+                
+            </div>
+            </div>
+
+
         <div class="row" *ngIf="figures != null">
                 <div class="col-sm-6 col-lg-3" *ngFor="let figure of figures;">
                     <div class="card card-stats">
@@ -36,9 +48,12 @@
                             <i class="material-icons">timeline</i>
                         </div>
                         <div class="card-content">
-                            <h4 class="card-title">累積用戶及信息數
+                            <h4 *ngIf="overall;else month;" class="card-title">累積用戶及信息數
                                 <!-- <small> - Rounded</small> -->
                             </h4>
+                            <ng-template #month>
+                                <h4 class="card-title">{{beginDate.month +'月用戶及信息數'}}</h4>
+                            </ng-template>
                         </div>
                         <div class="row">
                             <div class="col-md-9">
@@ -87,7 +102,7 @@
                 </div>
             </div>
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-4 col-md-offset-1">
                 <div class="card card-chart">
                     <div class="card-header" data-background-color="green" data-header-animation="true">
@@ -147,7 +162,7 @@
                         </div>
                     </div>
             </div>
-        </div>
+        </div> -->
 
 
 <!-- 

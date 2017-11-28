@@ -1,6 +1,7 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="row" *ngIf="figures != null">
+       
+        <!-- <div class="row" *ngIf="figures != null">
             <div class="col-md-4" *ngFor="let figure of figures;">
                 <div class="card card-stats">
                     <div class="card-header" [attr.data-background-color]="figure.backgroundColor">
@@ -20,21 +21,18 @@
                                         <i class="fa fa-long-arrow-down"></i> {{figure.smallText}} </span>
                                 </ng-template>
                             </p>
-                            <!-- <i class="material-icons text-success">{{figure.smallIcon}}</i>
-                                                    <a *ngIf="figure.optionalLink != '';else noLink" href="{{figure.optionalLink}}">{{figure.smallText}}</a>
-                                                    <ng-template #noLink>{{figure.smallText}}</ng-template> -->
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header card-header-icon" data-background-color="red">
+                    <!-- <div class="card-header card-header-icon" data-background-color="red">
                         <i class="material-icons">pie_chart</i>
-                    </div>
+                    </div> -->
                     <div class="card-content">
                         <h4 class="card-title">用戶性別</h4>
                     </div>
@@ -46,11 +44,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header card-header-icon" data-background-color="red">
+                    <!-- <div class="card-header card-header-icon" data-background-color="red">
                         <i class="material-icons">pie_chart</i>
-                    </div>
+                    </div> -->
                     <div class="card-content">
                         <h4 class="card-title">用戶地區</h4>
                     </div>
@@ -63,23 +61,67 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <!-- <div class="card-header card-header-icon" data-background-color="red">
+                        <i class="material-icons">pie_chart</i>
+                    </div> -->
+                    <div class="card-content">
+                        <h4 class="card-title">用戶年齡</h4>
+                    </div>
+                    <div id="chartPreferences3" class="ct-chart"></div>
+                    <div class="card-footer">
+                        <h6>Legend</h6>
+                        <i class="fa fa-circle text-info"></i> 18以下
+                        <i class="fa fa-circle text-danger"></i> 18-24
+                        <i class="fa fa-circle text-warning"></i> 25-34
+                        <i class="fa fa-circle text-primary"></i> 35-44
+                        <i class="fa fa-circle text-success"></i> 45-54
+                        <i class="fa fa-circle text-default"></i> 55以上
+                    </div>
+                </div>
+            </div>
         </div>
 
+
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <!-- <my-date-range-picker [options]="myDateRangePickerOptions" (dateRangeChanged)="onDateRangeChanged($event)" placeholder='{{beginDate.day}}.{{beginDate.month}}.{{beginDate.year}}'></my-date-range-picker> -->
+                <!-- <button class="btn btn-primary btn-round" style="vertical-align: text-bottom;" (click)="showOverall()">累積總數</button> -->
+                <md-select [color]="selectTheme" placeholder="" name="period" [(ngModel)]="period" ngClass="btn btn-primary btn-round simple" (change)="reload()">
+                    <md-option *ngFor="let duration of durations" [value]="duration.value">
+                        {{ duration.viewValue }}
+                    </md-option>
+                </md-select>
+            </div>
+           
+        </div>
 
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-icon" data-background-color="rose">
-                        <i class="material-icons">insert_chart</i>
-                    </div>
-                    <div class="card-content">
-                        <h4 class="card-title">回歸用戶
-                            <!-- <small>- Bar Chart</small> -->
-                        </h4>
-                    </div>
-                    <div id="multipleBarsChart" class="ct-chart"></div>
+            <div class="card">
+                <div class="card-header card-header-icon" data-background-color="blue">
+                    <i class="material-icons">timeline</i>
                 </div>
+                <div class="card-content">
+                    <h4 class="card-title">活躍用戶
+                        <!-- <small> - Rounded</small> -->
+                    </h4>
+                    
+                </div>
+                <div class="row">
+                    <!-- <div class="col-md-9"> -->
+                        <div id="colouredBarsChart" class="ct-chart"></div>
+                    <!-- </div> -->
+                    <!-- <div class="col-md-3">
+                        <p class="text-info">
+                            信息 </p>
+                        <p class="text-danger">
+                            用戶 </p>
+                    </div> -->
+                </div>
+            </div>
             </div>
         </div>
 
@@ -90,23 +132,29 @@
                         <i class="material-icons">assignment</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">回歸用戶2</h4>
-                        <div class="content table-responsive" *ngIf="tableData != null">
+                        <h4 class="card-title">活躍用戶</h4>
+                        <div class="content table-responsive" *ngIf="tableData2 != null">
                             <table class="table">
                                 <thead class="text-primary">
                                     <tr>
-                                        <th *ngFor="let cell of tableData.headerRow">{{ cell }}</th> <!-- should show days -->
+                                        <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th> <!-- should show days -->
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let row of tableData.dataRows; let $index = index;">
-                                        <td>{{'week'+$index }}</td>       <!-- should show weeks -->
-                                        <td class="{{classList[$index][0]}}">{{row[0]}}</td>       <!-- should show colors/percent -->
-                                        <td class="{{classList[$index][1]}}">{{row[1]}}</td>        <!--{{percentList[$index][1]}}-->
-                                        <td class="{{classList[$index][2]}}">{{row[2]}}</td>
-                                        <td class="{{classList[$index][3]}}">{{row[3]}}</td>
-                                        <td class="{{classList[$index][4]}}">{{row[4]}}</td>
-                                        <td class="{{classList[$index][5]}}">{{row[5]}}</td>
+                                    <tr *ngFor="let row of tableData2.dataRows; let $index = index;">
+                                        <td>{{row[0]}}</td>       <!-- should show day -->
+                                        <td class="{{classList2[$index][1]}}">{{row[1]}}</td>       
+                                        <td class="{{classList2[$index][2]}}">{{row[2]}}</td>
+                                        <td class="{{classList2[$index][3]}}">{{row[3]}}</td>
+                                        <td class="{{classList2[$index][4]}}">{{row[4]}}</td>
+                                        <td class="{{classList2[$index][5]}}">{{row[5]}}</td>
+                                        <td class="{{classList2[$index][5]}}">{{row[6]}}</td>
+                                        <td class="{{classList2[$index][5]}}">{{row[7]}}</td>
+                                        <td class="{{classList2[$index][5]}}">{{row[8]}}</td>
+                                        <td class="{{classList2[$index][5]}}">{{row[9]}}</td>
+                                        <td class="{{classList2[$index][5]}}">{{row[10]}}</td>
+                                        <td class="{{classList2[$index][5]}}">{{row[11]}}</td>
+                                        <td class="{{classList2[$index][5]}}">{{row[12]}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -119,6 +167,45 @@
 
 
         <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">回歸用戶</h4>
+                        <div class="content table-responsive" *ngIf="tableData != null">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <tr>
+                                        <th *ngFor="let cell of tableData.headerRow">{{ cell }}</th>
+                                        <!-- should show days -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of tableData.dataRows; let $index = index;">
+                                        <td>{{'week'+$index }}</td>
+                                        <!-- should show weeks -->
+                                        <td class="{{classList[$index][0]}}">{{row[0]}}</td>
+                                        <!-- should show colors/percent -->
+                                        <td class="{{classList[$index][1]}}">{{row[1]}}</td>
+                                        <!--{{percentList[$index][1]}}-->
+                                        <td class="{{classList[$index][2]}}">{{row[2]}}</td>
+                                        <td class="{{classList[$index][3]}}">{{row[3]}}</td>
+                                        <td class="{{classList[$index][4]}}">{{row[4]}}</td>
+                                        <td class="{{classList[$index][5]}}">{{row[5]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="row">
             <div class="col-sm-8">
                 <div class="widget-box">
                     <div class="widget-header">
@@ -202,15 +289,15 @@
                                                     </div>
                                                 </div>
                                             </form>
-                        </div>
+                        </div> -->
                         <!-- /.widget-main -->
-                    </div>
+                    <!-- </div> -->
                     <!-- /.widget-body -->
-                </div>
+                <!-- </div> -->
                 <!-- /.widget-box -->
-            </div>
+            <!-- </div> -->
             <!-- /.col -->
-        </div>
+        <!-- </div> -->
 
     </div>
 </div>

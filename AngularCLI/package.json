@@ -56,6 +56,7 @@
     "jvectormap": "2.0.4",
     "moment": "2.18.1",
     "moment-timezone": "0.4.0",
+    "mydaterangepicker": "^4.1.11",
     "ng2-nouislider": "1.6.1",
     "ng2-select": "1.2.0",
     "ngx-chips": "1.4.6",

@@ -1,0 +1,207 @@
+<div class="main-content">
+    <div class="container-fluid">
+       
+        <div class="row">
+            <div class="col-md-6">
+                <my-date-range-picker [options]="myDateRangePickerOptions" (dateRangeChanged)="onDateRangeChanged($event)" placeholder='{{beginDate.day}}.{{beginDate.month}}.{{beginDate.year}}'></my-date-range-picker>
+                <!-- <button class="btn btn-primary btn-round" style="vertical-align: text-bottom;" (click)="showOverall()">累積總數</button> -->
+                <!-- <md-select [color]="selectTheme" placeholder="" name="period" [(ngModel)]="period" ngClass="btn btn-primary btn-round simple" (change)="reload()">
+                    <md-option *ngFor="let duration of durations" [value]="duration.value">
+                        {{ duration.viewValue }}
+                    </md-option>
+                </md-select> -->
+            </div>
+            <div class="col-md-6">
+        
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title lighter smaller">
+                            <i class="ace-icon fa fa-comment blue"></i>
+                            問答統計
+                        </h4>
+                        <div class="widget-toolbar">
+                            <button type="button" class="btn btn-info btn-simple custom" rel="tooltip" data-placement="bottom" title="Refresh" (click)="refresh();">
+                                <i class="material-icons">refresh</i>
+                            </button>
+                        </div>
+                    </div>
+        
+                    <div class="widget-body" *ngIf="conversations != null">
+                        <div class="widget-main no-padding">
+                            <div class="scroll-content">
+                                <div class="dialogs" *ngFor="let conv of conversations;">
+        
+                                    <div class="itemdiv dialogdiv" *ngIf="conv.Name == adminName;else notAdmin">
+        
+                                        <div class="body Admin">
+                                            <div class="time">
+                                                            <i class="ace-icon fa fa-clock-o"></i>
+                                                            <span class="red">{{conv.Time}}</span>
+                                                        </div>
+        
+                                            <div class="name">
+                                                <a>{{conv.Name}}</a>
+                                                <span class="label label-info arrowed arrowed-in-right">chatbot</span>
+                                            </div>
+                                            <div class="text">{{conv.Comment}}</div>
+        
+                                        </div>
+        
+                                        <div class="user right">
+                                            <img alt="Bob's Avatar" src="{{conv.ImgUrl}}" />
+                                        </div>
+                                    </div>
+        
+                                    <ng-template #notAdmin>
+                                        <div class="itemdiv dialogdiv">
+                                            <div class="user">
+                                                <img alt="Alex's Avatar" src="{{conv.ImgUrl}}" />
+                                            </div>
+        
+                                            <div class="body">
+                                                <div class="time">
+                                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                                <span class="blue">{{conv.Time}}</span>
+                                                            </div>
+        
+                                                <div class="name">
+                                                    <a>{{conv.Name}}</a>
+                                                </div>
+                                                <div class="text">{{conv.Comment}}</div>
+        
+                                                <div class="tools">
+                                                                <a (click)="reply(conv.Name, conv.Comment)" class="btn btn-minier btn-info">
+                                                                    <i class="icon-only ace-icon fa fa-share"></i>
+                                                                </a>
+                                                            </div>
+                                            </div>
+                                        </div>
+        
+                                    </ng-template>
+        
+                                </div>
+                            </div>
+        
+                            <form>
+                                                <div class="form-actions">
+                                                    <div class="input-group">
+                                                        <input placeholder="Type your message here ..." type="textarea" rows="3" class="form-control message" name="message" />
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-sm btn-info no-radius" type="button" (click)="sendMessage()">
+                                                                <i class="ace-icon fa fa-share"></i>
+                                                                Send
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                        </div>
+                        <!-- /.widget-main -->
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-box -->
+            </div>
+            <!-- /.col -->
+
+            <div class="col-sm-6">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title lighter smaller">
+                            <i class="ace-icon fa fa-comment blue"></i>
+                            問答統計
+                        </h4>
+                        <div class="widget-toolbar">
+                            <button type="button" class="btn btn-info btn-simple custom" rel="tooltip" data-placement="bottom" title="Refresh" (click)="refresh();">
+                                <i class="material-icons">refresh</i>
+                            </button>
+                        </div>
+                    </div>
+            
+                    <div class="widget-body" *ngIf="conversations != null">
+                        <div class="widget-main no-padding">
+                            <div class="scroll-content">
+                                <div class="dialogs" *ngFor="let conv of conversations;">
+            
+                                    <div class="itemdiv dialogdiv" *ngIf="conv.Name == adminName;else notAdmin">
+            
+                                        <div class="body Admin">
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="red">{{conv.Time}}</span>
+                                            </div>
+            
+                                            <div class="name">
+                                                <a>{{conv.Name}}</a>
+                                                <span class="label label-info arrowed arrowed-in-right">chatbot</span>
+                                            </div>
+                                            <div class="text">{{conv.Comment}}</div>
+            
+                                        </div>
+            
+                                        <div class="user right">
+                                            <img alt="Bob's Avatar" src="{{conv.ImgUrl}}" />
+                                        </div>
+                                    </div>
+            
+                                    <ng-template #notAdmin>
+                                        <div class="itemdiv dialogdiv">
+                                            <div class="user">
+                                                <img alt="Alex's Avatar" src="{{conv.ImgUrl}}" />
+                                            </div>
+            
+                                            <div class="body">
+                                                <div class="time">
+                                                    <i class="ace-icon fa fa-clock-o"></i>
+                                                    <span class="blue">{{conv.Time}}</span>
+                                                </div>
+            
+                                                <div class="name">
+                                                    <a>{{conv.Name}}</a>
+                                                </div>
+                                                <div class="text">{{conv.Comment}}</div>
+            
+                                                <div class="tools">
+                                                    <a (click)="reply(conv.Name, conv.Comment)" class="btn btn-minier btn-info">
+                                                        <i class="icon-only ace-icon fa fa-share"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+            
+                                    </ng-template>
+            
+                                </div>
+                            </div>
+            
+                            <form>
+                                <div class="form-actions">
+                                    <div class="input-group">
+                                        <input placeholder="Type your message here ..." type="textarea" rows="3" class="form-control message" name="message" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-sm btn-info no-radius" type="button" (click)="sendMessage()">
+                                                <i class="ace-icon fa fa-share"></i>
+                                                Send
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.widget-main -->
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+
+    </div>
+</div>

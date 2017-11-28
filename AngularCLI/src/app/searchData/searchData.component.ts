@@ -3,7 +3,10 @@ import { TableData } from '../md/md-table/md-table.component';
 import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
 
 import * as Chartist from 'chartist';
-import { appService } from '../app.service'
+import { appService } from '../app.service';
+import { IMyDrpOptions, IMyDateRangeModel } from 'mydaterangepicker';
+import { Observable } from "rxjs/Observable";
+import { CommonModule } from '@angular/common';
 
 declare const $: any;
 
@@ -28,6 +31,13 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
     public tableData3: TableData;
     public tableData4: TableData;
     public keywords: any[] = [];
+    public beginDate: any = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+    public endDate: any;
+    public overall: boolean = false;
+    myDateRangePickerOptions: IMyDrpOptions = {
+        // other options...
+        dateFormat: 'dd.mm.yyyy',
+    };
     private testlink = "http://hayhay0730.000webhostapp.com/test.php";
     private testTable = "http://hayhay0730.000webhostapp.com/testTable.php";
     //   private testlink = "http://www.drcare.ai/php/test.php";
@@ -138,6 +148,32 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         // console.log('mouse leave');      //DEBUG
         $(event.target).css('font-weight','100');
         $('.ct-line').css('stroke-width', '3px');
+    }
+
+    // dateRangeChanged callback function called when the user apply the date range. This is
+    // mandatory callback in this option. There are also optional inputFieldChanged and
+    // calendarViewChanged callbacks.
+    onDateRangeChanged(event: IMyDateRangeModel) {
+        // event properties are: event.beginDate, event.endDate, event.formatted,
+        // event.beginEpoc and event.endEpoc
+
+        this.overall = false;
+
+        this.beginDate = event.beginDate;
+        this.endDate = event.endDate;
+        console.log(this.beginDate);
+        console.log(this.endDate);
+
+        //    update content 
+        
+
+    }
+
+    showOverall() {
+        this.overall = true;
+
+        //    update content 
+       
     }
 
 

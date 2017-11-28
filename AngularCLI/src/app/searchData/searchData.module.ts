@@ -6,13 +6,15 @@ import { MdModule } from '../md/md.module';
 
 import { SearchDataComponent } from './searchData.component';
 import { SearchDataRoutes } from './searchData.routing';
+import { MyDateRangePickerModule } from 'mydaterangepicker';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule.forChild(SearchDataRoutes),
         FormsModule,
-        MdModule
+        MdModule,
+        MyDateRangePickerModule
     ],
     declarations: [SearchDataComponent]
 })

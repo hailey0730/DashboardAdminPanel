@@ -4,7 +4,9 @@ import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
 
 import * as Chartist from 'chartist';
 import { appService } from '../app.service'
-// import { Observable } from "rxjs/Observable";
+import { IMyDrpOptions, IMyDateRangeModel } from 'mydaterangepicker';
+import { Observable } from "rxjs/Observable";
+import { CommonModule } from '@angular/common';
 declare const $: any;
 
 @Component({
@@ -27,6 +29,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public newUser : any;
   public newMessage: any;
   public updateTime: any;
+  public beginDate: any = { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()};
+  public endDate: any;
+  public overall: boolean = false;
+  myDateRangePickerOptions: IMyDrpOptions = {
+      // other options...
+      dateFormat: 'dd.mm.yyyy',
+  };
   private adminName = "Bob";
   private adminPic = "../../assets/img/faces/avatar.jpg";
   private testlink = "http://hayhay0730.000webhostapp.com/test.php";
@@ -105,16 +114,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       //test plug in charts data from server===============================================
       this.loadSimpleCharts();
       
-         //testing get json from appService=================================
+         //==================================top 4 figures=================================
         //   console.log('outside promise');  //DEBUG
           this.appService.getJson(this.testlink).then((data) => {
             this.figures = data;
             // console.log(this.figures);  //DEBUG
-            // $('.card-header').attr('data-background-color', this.figures[2]['backgroundColor']);
-            
           });
 
-    //   this.figures = [
+    //   this.figures = [                   //testing purpose
     //       {
     //           "backgroundColor": "blue",
     //           "bigIcon": "accessibility",
@@ -149,7 +156,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //       }
     //   ]
 
-      this.otherFigures = [
+    //==================================right 2 figures=================================
+      this.otherFigures = [             //testing purpose
           {
               "backgroundColor": "blue",
               "bigIcon": "message",
@@ -168,7 +176,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           }
       ]
 
-         
 
           //initialize conversation block========================================
         //   this.appService.getJson(this.conversationLink).then((data) => {
@@ -179,163 +186,89 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    }
    
    ngAfterViewInit() {
-       const breakCards = true;
-       if (breakCards === true) {
-           // We break the cards headers if there is too much stress on them :-)
-           $('[data-header-animation="true"]').each(function(){
-               const $fix_button = $(this);
-               const $card = $(this).parent('.card');
-               $card.find('.fix-broken-card').click(function(){
-                   const $header = $(this).parent().parent().siblings('.card-header, .card-image');
-                   $header.removeClass('hinge').addClass('fadeInDown');
-
-                   $card.attr('data-count', 0);
-
-                   setTimeout(function(){
-                       $header.removeClass('fadeInDown animate');
-                   }, 480);
-               });
-
-               $card.mouseenter(function(){
-                   const $this = $(this);
-                   const hover_count = parseInt($this.attr('data-count'), 10) + 1 || 0;
-                   $this.attr('data-count', hover_count);
-                //    if (hover_count >= 20) {
-                //        $(this).children('.card-header, .card-image').addClass('hinge animated');
-                //    }
-               });
-           });
-       }
+      
        //  Activate the tooltips
        $('[rel="tooltip"]').tooltip();
    }
 
+//conversation block
+//    sendMessage(){
+//        var message = $('.message').val();
 
-   IsAdmin(name):boolean{
-       var bool = false;
-       if(name == this.adminName){
-           bool = true;
-       }
-       return bool;
-   }
-
-   sendMessage(){
-       var message = $('.message').val();
-
-       var newMessage = {
-           "Name": this.adminName,
-           "ImgUrl": this.adminPic,
-           "Comment": message,
-           "Time": (new Date).toLocaleTimeString()
-        };
+//        var newMessage = {
+//            "Name": this.adminName,
+//            "ImgUrl": this.adminPic,
+//            "Comment": message,
+//            "Time": (new Date).toLocaleTimeString()
+//         };
    
-       this.conversations.push(newMessage);
-    //    this.appService.postJson('http://hayhay0730.000webhostapp.com/conversation.json', this.conversations);
+//        this.conversations.push(newMessage);
+//     //    this.appService.postJson('http://hayhay0730.000webhostapp.com/conversation.json', this.conversations);
+//    }
+
+//    reply(name, comment){
+//        var replyText = '@' + name + ' \n "'  + comment + '"  ' + this.adminName + " : " ;
+//        $('.message').val(replyText);
+
+//    }
+//conversation block end
+
+   // dateRangeChanged callback function called when the user apply the date range. This is
+   // mandatory callback in this option. There are also optional inputFieldChanged and
+   // calendarViewChanged callbacks.
+   onDateRangeChanged(event: IMyDateRangeModel) {
+       // event properties are: event.beginDate, event.endDate, event.formatted,
+       // event.beginEpoc and event.endEpoc
+
+       this.overall = false;
+
+       this.beginDate = event.beginDate;
+       this.endDate = event.endDate;
+       console.log(this.beginDate);
+       console.log(this.endDate);
+
+    //    update content 
+    //update top 4 figures
+       this.appService.getJson(this.testlink).then((data) => {
+           this.figures = data;
+           // console.log(this.figures);  //DEBUG
+       });
+
+       //update right 2 figures
+
+       //update chart - might need to modify to include parameter
+       this.loadSimpleCharts();
+
    }
 
-   reply(name, comment){
-       var replyText = '@' + name + ' \n "'  + comment + '"  ' + this.adminName + " : " ;
-       $('.message').val(replyText);
+   showOverall(){
+    this.overall = true;
 
+    //    update content 
+    //update top 4 figures
+    this.appService.getJson(this.testlink).then((data) => {
+        this.figures = data;
+        // console.log(this.figures);  //DEBUG
+    });
+
+       //update right 2 figures
+
+       //update chart - might need to modify to include parameter
+       this.loadSimpleCharts();
    }
 
    loadSimpleCharts(){
-       const today = new Date();
-       const y = today.getFullYear();
-       const m = today.getMonth();
-       const d = today.getDate();
-       const h = today.getHours();
-       const min = today.getMinutes();
-       const s = today.getSeconds();
+    //    const today = new Date();
+    //    const y = today.getFullYear();
+    //    const m = today.getMonth();
+    //    const d = today.getDate();
+    //    const h = today.getHours();
+    //    const min = today.getMinutes();
+    //    const s = today.getSeconds();
 
-       this.updateTime = y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
+    //    this.updateTime = y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
 
-       /*  **************** Coloured Rounded Line Chart - Line Chart ******************** */
-
-
-    //    const dataColouredBarsChart = {
-    //        labels: ['\'06', '\'07', '\'08', '\'09', '\'10', '\'11', '\'12', '\'13', '\'14', '\'15'],
-    //        series: [
-    //            [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944],
-    //            [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647]
-    //        ]
-    //    };
-
-    //    const optionsColouredBarsChart: any = {
-    //        lineSmooth: Chartist.Interpolation.cardinal({
-    //            tension: 10
-    //        }),
-    //        axisY: {
-    //            showGrid: true,
-    //            offset: 40
-    //        },
-    //        axisX: {
-    //            showGrid: false,
-    //        },
-    //        low: 0,
-    //        high: 1000,
-    //        showPoint: true,
-    //        height: '300px'
-    //    };
-
-
-    //    const colouredBarsChart = new Chartist.Line('#colouredBarsChart', dataColouredBarsChart,
-    //        optionsColouredBarsChart);
-
-    //    this.startAnimationForLineChart(colouredBarsChart);
-      
-
-    //    /* ----------==========     Daily Sales Chart initialization    ==========---------- */
-
-    //      const dataDailySalesChart = {
-    //          labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-    //          series: [
-    //              [12, 17, 7, 17, 23, 18, 38]
-    //          ]
-    //      };
-
-    //    const optionsDailySalesChart = {
-    //        lineSmooth: Chartist.Interpolation.cardinal({
-    //            tension: 0
-    //        }),
-    //        low: 0,
-    //        high: 200, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    //        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-    //    };
-
-    //      const dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-    //      this.startAnimationForLineChart(dailySalesChart);
-
-      
-
-
-    //    /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-    //      const dataCompletedTasksChart = {
-    //          labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-    //          series: [
-    //              [230, 750, 450, 300, 280, 240, 200, 190]
-    //          ]
-    //      };
-
-    //    const optionsCompletedTasksChart = {
-    //        lineSmooth: Chartist.Interpolation.cardinal({
-    //            tension: 0
-    //        }),
-    //        low: 0,
-    //        high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better
-    //        // look
-    //        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    //    };
-
-    //     const completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart,
-    //      optionsCompletedTasksChart);
-
-    //     this.startAnimationForLineChart(completedTasksChart);
-
-
-       this.appService.getJson(this.simpleChartsLink).then((data) => {
+        this.appService.getJson(this.simpleChartsLink).then((data) => {
             //  console.log(data[0]);  //DEBUG
 
            const dataColouredBarsChart = {

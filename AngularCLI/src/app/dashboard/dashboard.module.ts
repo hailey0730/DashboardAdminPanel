@@ -6,13 +6,15 @@ import { MdModule } from '../md/md.module';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
+import { MyDateRangePickerModule } from 'mydaterangepicker';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule.forChild(DashboardRoutes),
         FormsModule,
-        MdModule
+        MdModule,
+        MyDateRangePickerModule
     ],
     declarations: [DashboardComponent]
 })

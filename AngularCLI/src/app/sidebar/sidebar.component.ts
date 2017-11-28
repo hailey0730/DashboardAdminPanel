@@ -36,7 +36,12 @@ export const ROUTES: RouteInfo[] = [{
     title: '查詢數據',
     type: 'link',
     icontype: 'search'
-    }];
+}, {
+    path: '/fallback',
+    title: '不能處理的情況',
+    type: 'link',
+    icontype: 'report_problem'
+}];
 // export const ROUTES: RouteInfo[] = [{
 //         path: '/dashboard',
 //         title: 'Dashboard',

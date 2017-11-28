@@ -4,13 +4,15 @@ import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
 
 import * as Chartist from 'chartist';
 import { appService } from '../app.service'
-// import { Observable } from "rxjs/Observable";
+import { IMyDrpOptions, IMyDateRangeModel } from 'mydaterangepicker';
+import { Observable } from "rxjs/Observable";
+import { CommonModule } from '@angular/common';
 declare const $: any;
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './otherData.component.html',
-    styleUrls: ['./css/otherData.css', './css/ace.min.css', './css/conversation.css'],
+    styleUrls: ['./css/otherData.css'],
     // styleUrls: ['../../assets/css/otherData.css'],
     providers: [
         appService
@@ -23,14 +25,32 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
     // constructor(private navbarTitleService: NavbarTitleService, private notificationService: NotificationService) { }
     public figures: any[];
     public tableData: TableData;
+    public tableData2: TableData;
     public conversations: any[];
     public adminName = "Bob";
+    public beginDate: any = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+    public endDate: any;
+    public overall: boolean = false;
+    public period: any = '24hr';
+    myDateRangePickerOptions: IMyDrpOptions = {
+        // other options...
+        dateFormat: 'dd.mm.yyyy',
+    };
     public classList: any[] = [['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
         ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
         ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
         ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
         ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
         ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20']];
+
+    public classList2: any[] = [['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
+    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
+    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
+    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
+    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
+    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
+    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20']];
+
 
     public percentList:any[] = [['100%','80%','60%','50%','40%','20%'],
         ['100%', '80%', '60%', '50%', '40%', '20%'],
@@ -39,10 +59,17 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         ['100%', '80%', '60%', '50%', '40%', '20%'],
         ['100%', '80%', '60%', '50%', '40%', '20%']];
 
+    selectTheme = 'primary';
+    durations = [
+        {value: '24hr', viewValue: 'Last 24 hours'},
+        {value: '7d', viewValue: 'Last 7 days'},
+        {value: '14d', viewValue: 'Last 14 days'}
+    ]
+    
     private testlink = "http://hayhay0730.000webhostapp.com/otherDataTop.php";
     private usersDataLink = "http://hayhay0730.000webhostapp.com/loadUsersConv.php";
     private conversationLink = "http://hayhay0730.000webhostapp.com/conversation.php";
-
+    private simpleChartsLink = "http://hayhay0730.000webhostapp.com/simpleCharts.php";
     startAnimationForLineChart(chart: any) {
         let seq: any, delays: any, durations: any;
         seq = 0;
@@ -101,6 +128,8 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
     // constructor(private navbarTitleService: NavbarTitleService) { }
     public ngOnInit() {
 
+        this.loadChart();
+
         this.appService.getJson(this.testlink).then((data) => {
            
             this.figures = data;
@@ -122,7 +151,12 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         };
 
         const optionsPreferences = {
-            height: '230px'
+            donut: true,
+            donutWidth: 30,
+            donutSolid: true,
+            startAngle: 270,
+            showLabel: true,
+            height: '200px'
         };
 
         new Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
@@ -138,10 +172,33 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         };
 
         const optionsPreferences2 = {
-            height: '230px'
+            donut: true,
+            donutWidth: 30,
+            donutSolid: true,
+            startAngle: 270,
+            showLabel: true,
+            height: '200px'
         };
 
         new Chartist.Pie('#chartPreferences2', dataPreferences2, optionsPreferences2);
+
+        /*  **************** User Region - Pie Chart3 ******************** */
+
+        const dataPreferences3 = {
+            labels: ['16%', '32%', '6%', '20%', '10%', '16%'],
+            series: [16, 32, 6, 20, 10, 16]
+        };
+
+        const optionsPreferences3 = {
+            donut: true,
+            donutWidth: 30,
+            donutSolid: true,
+            startAngle: 270,
+            showLabel: true,
+            height: '200px'
+        };
+
+        new Chartist.Pie('#chartPreferences3', dataPreferences3, optionsPreferences3);
 
         // ============returning users bar chart=============================
 
@@ -177,9 +234,23 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
 
         this.startAnimationForBarChart(multipleBarsChart);
 
-// ========returning users color table===========================================================
+// ========active hours color table===========================================================
+        this.tableData2 = {
+            headerRow: ['', '12am', '2am', '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+            dataRows: [
+                ['Sun','70%', '10%', '10%', '10%', '10%', '10%', '70%', '70%', '70%', '70%', '70%', '70%'],
+                ['Mon', '70%', '10%', '10%', '10%', '10%', '10%', '70%', '70%', '70%', '70%', '70%', '70%'],
+                ['Tue', '70%', '10%', '10%', '10%', '10%', '10%', '70%', '70%', '70%', '70%', '70%', '70%'],
+                ['Wed', '70%', '10%', '10%', '10%', '10%', '10%', '70%', '70%', '70%', '70%', '70%', '70%'],
+                ['Thur', '70%', '10%', '10%', '10%', '10%', '10%', '70%', '70%', '70%', '70%', '70%', '70%'],
+                ['Fri', '70%', '10%', '10%', '10%', '10%', '10%', '70%', '70%', '70%', '70%', '70%', '70%'],
+                ['Sat', '70%', '10%', '10%', '10%', '10%', '10%', '70%', '70%', '70%', '70%', '70%', '70%']
+            ]
+        }
+
+        // ========returning users color table===========================================================
         this.tableData = {
-            headerRow: ['week/Days', '  Initial','1 - 7', '8 - 14','15 - 21','22 - 28','29 - 35'],
+            headerRow: ['week/Days', '  Initial', '1 - 7', '8 - 14', '15 - 21', '22 - 28', '29 - 35'],
             dataRows: this.percentList
         }
        
@@ -194,9 +265,74 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         $('[rel="tooltip"]').tooltip();
     }
 
+    // dateRangeChanged callback function called when the user apply the date range. This is
+    // mandatory callback in this option. There are also optional inputFieldChanged and
+    // calendarViewChanged callbacks.
+    onDateRangeChanged(event: IMyDateRangeModel) {
+        // event properties are: event.beginDate, event.endDate, event.formatted,
+        // event.beginEpoc and event.endEpoc
+
+        this.overall = false;
+
+        this.beginDate = event.beginDate;
+        this.endDate = event.endDate;
+        console.log(this.beginDate);
+        console.log(this.endDate);
+
+        //    update content 
+        
+
+    }
+
+    showOverall() {
+        this.overall = true;
+
+        //    update content 
+        
+    }
+
     refresh(){
         this.appService.getJson(this.conversationLink).then((data) => {
             this.conversations = data;
+        });
+    }
+
+    reload(){
+        console.log(this.period);
+    }
+
+    loadChart(){
+        this.appService.getJson(this.simpleChartsLink).then((data) => {
+            //  console.log(data[0]);  //DEBUG
+
+            const dataColouredBarsChart = {
+                labels: data[0]['labels'],
+                series: data[0]['series']
+            };
+
+            const optionsColouredBarsChart: any = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 10
+                }),
+                axisY: {
+                    showGrid: true,
+                    offset: 40
+                },
+                axisX: {
+                    showGrid: false,
+                },
+                low: 0,
+                high: data[0]['series'],
+                showPoint: true,
+                height: '300px',
+                chartPadding: { right: 40 }
+            };
+
+
+            const colouredBarsChart = new Chartist.Line('#colouredBarsChart', dataColouredBarsChart,
+                optionsColouredBarsChart);
+
+            this.startAnimationForLineChart(colouredBarsChart);
         });
     }
 
