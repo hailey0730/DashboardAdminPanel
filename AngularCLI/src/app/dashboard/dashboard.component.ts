@@ -116,45 +116,45 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       
          //==================================top 4 figures=================================
         //   console.log('outside promise');  //DEBUG
-          this.appService.getJson(this.testlink).then((data) => {
-            this.figures = data;
-            // console.log(this.figures);  //DEBUG
-          });
+        //   this.appService.getJson(this.testlink).then((data) => {
+        //     this.figures = data;
+        //     // console.log(this.figures);  //DEBUG
+        //   });
 
-    //   this.figures = [                   //testing purpose
-    //       {
-    //           "backgroundColor": "blue",
-    //           "bigIcon": "accessibility",
-    //           "category": "用戶總數",
-    //           "number": "1000",
-    //           "smallIcon": "increase",
-    //           "smallText": "3%"
-    //       },
-    //       {
-    //           "backgroundColor": "orange",
-    //           "bigIcon": "question_answer",
-    //           "category": "信息總數",
-    //           "number": "3500",
-    //           "smallIcon": "increase",
-    //           "smallText": "5%"
-    //       },
-    //       {
-    //           "backgroundColor": "purple",
-    //           "bigIcon": "chat_bubble",
-    //           "category": "平均每名用戶的信息",
-    //           "number": "5",
-    //           "smallIcon": "decrease",
-    //           "smallText": "1%"
-    //       },
-    //       {
-    //           "backgroundColor": "red",
-    //           "bigIcon": "reply",
-    //           "category": "分享總數",
-    //           "number": "400",
-    //           "smallIcon": "increase",
-    //           "smallText": "5%"
-    //       }
-    //   ]
+      this.figures = [                   //testing purpose
+          {
+              "backgroundColor": "blue",
+              "bigIcon": "accessibility",
+              "category": "用戶總數",
+              "number": "1000",
+              "smallIcon": "increase",
+              "smallText": "3%"
+          },
+          {
+              "backgroundColor": "orange",
+              "bigIcon": "question_answer",
+              "category": "信息總數",
+              "number": "3500",
+              "smallIcon": "increase",
+              "smallText": "5%"
+          },
+          {
+              "backgroundColor": "purple",
+              "bigIcon": "chat_bubble",
+              "category": "平均每名用戶的信息",
+              "number": "5",
+              "smallIcon": "decrease",
+              "smallText": "1%"
+          },
+          {
+              "backgroundColor": "red",
+              "bigIcon": "reply",
+              "category": "分享總數",
+              "number": "400",
+              "smallIcon": "increase",
+              "smallText": "5%"
+          }
+      ]
 
     //==================================right 2 figures=================================
       this.otherFigures = [             //testing purpose
@@ -230,7 +230,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //    update content 
     //update top 4 figures
        this.appService.getJson(this.testlink).then((data) => {
-           this.figures = data;
+        //    this.figures = data;
            // console.log(this.figures);  //DEBUG
        });
 
@@ -247,7 +247,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //    update content 
     //update top 4 figures
     this.appService.getJson(this.testlink).then((data) => {
-        this.figures = data;
+        // this.figures = data;
         // console.log(this.figures);  //DEBUG
     });
 
@@ -268,14 +268,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     //    this.updateTime = y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
 
-        this.appService.getJson(this.simpleChartsLink).then((data) => {
+        // this.appService.getJson(this.simpleChartsLink).then((data) => {
             //  console.log(data[0]);  //DEBUG
 
-           const dataColouredBarsChart = {
-               labels: data[0]['labels'],
-               series: data[0]['series']
-           };
+        //    const dataColouredBarsChart = {
+        //        labels: data[0]['labels'],
+        //        series: data[0]['series']
+        //    };
 
+
+            const dataColouredBarsChart = {
+                labels: ["06", "07", "08", "09", "10", "11", "12", "13", "14", "15"],
+                series: [
+                    [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944],
+                    [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647]
+                ],
+            };
            const optionsColouredBarsChart: any = {
                lineSmooth: Chartist.Interpolation.cardinal({
                    tension: 10
@@ -288,7 +296,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                    showGrid: false,
                },
                low: 0,
-               high: data[0]['series'],
+               high: 1000,
+            //    high: data[0]['scale'],
                showPoint: true,
                height: '300px'
            };
@@ -300,59 +309,59 @@ export class DashboardComponent implements OnInit, AfterViewInit {
            this.startAnimationForLineChart(colouredBarsChart);
 
 
-           //initialize new user chart=============================================================
-           this.newUser = {
-               'smallIcon': data[1]['smallIcon'],
-               'percentage': data[1]['percentage'],
-           }
+        //    //initialize new user chart=============================================================
+        //    this.newUser = {
+        //        'smallIcon': data[1]['smallIcon'],
+        //        'percentage': data[1]['percentage'],
+        //    }
 
            
 
-           const optionsDailySalesChart = {
-               lineSmooth: Chartist.Interpolation.cardinal({
-                   tension: 0
-               }),
-               low: 0,
-               high: data[1]['scale'], // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-               chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-           };
+        //    const optionsDailySalesChart = {
+        //        lineSmooth: Chartist.Interpolation.cardinal({
+        //            tension: 0
+        //        }),
+        //        low: 0,
+        //        high: data[1]['scale'], // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        //        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+        //    };
 
-           const dataDailySalesChart = {
-               labels: data[1]['labels'],
-               series: data[1]['series']
-           };
-           //   console.log(dataDailySalesChart);  //DEBUG
-           const dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+        //    const dataDailySalesChart = {
+        //        labels: data[1]['labels'],
+        //        series: data[1]['series']
+        //    };
+        //    //   console.log(dataDailySalesChart);  //DEBUG
+        //    const dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
 
-           this.startAnimationForLineChart(dailySalesChart);
+        //    this.startAnimationForLineChart(dailySalesChart);
 
-           //initialize messages chart===================================================
-           this.newMessage = {
-               'smallIcon': data[2]['smallIcon'],
-               'percentage': data[2]['percentage'],
-           }
+        //    //initialize messages chart===================================================
+        //    this.newMessage = {
+        //        'smallIcon': data[2]['smallIcon'],
+        //        'percentage': data[2]['percentage'],
+        //    }
 
-           const optionsCompletedTasksChart = {
-               lineSmooth: Chartist.Interpolation.cardinal({
-                   tension: 0
-               }),
-               low: 0,
-               high: data[2]['scale'], // creative tim: we recommend you to set the high sa the biggest value + something for a better
-               // look
-               chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-           };
+        //    const optionsCompletedTasksChart = {
+        //        lineSmooth: Chartist.Interpolation.cardinal({
+        //            tension: 0
+        //        }),
+        //        low: 0,
+        //        high: data[2]['scale'], // creative tim: we recommend you to set the high sa the biggest value + something for a better
+        //        // look
+        //        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+        //    };
 
-           const dataCompletedTasksChart = {
-               labels: data[2]['labels'],
-               series: data[2]['series']
-           }
-           const completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart,
-               optionsCompletedTasksChart);
+        //    const dataCompletedTasksChart = {
+        //        labels: data[2]['labels'],
+        //        series: data[2]['series']
+        //    }
+        //    const completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart,
+        //        optionsCompletedTasksChart);
 
-           this.startAnimationForLineChart(completedTasksChart);
+        //    this.startAnimationForLineChart(completedTasksChart);
 
           
-       });
+    //    });
    }
 
    

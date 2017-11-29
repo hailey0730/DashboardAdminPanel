@@ -31,7 +31,7 @@
                     <div id="colouredBarsChart" class="ct-chart"></div>
                     </div>
                     <div class="col-md-3" *ngFor="let keyword of keywords">  
-                        <h2 *ngIf="keyword.color != ''" class="{{keyword.color}}"  [ngStyle]="{'font-size':keyword.count}" (mouseover)="highlight($event)" (mouseout)="noHighlight($event)">
+                        <h2 *ngIf="keyword.color != ''" class="{{keyword.color}}"  [ngStyle]="{'font-size':keyword.count}" style="cursor:pointer;" (mouseover)="highlight($event)" (mouseout)="noHighlight($event)" (click)="hideLine($event)">
                             {{keyword.word}} </h2>
                     </div>
                     </div>
@@ -40,40 +40,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header card-header-icon" data-background-color="rose">
-                            <i class="material-icons">assignment</i>
-                        </div>
-                        <div class="card-content">
-                            <h4 class="card-title">最常使用卡片</h4>
-                            <div class="content table-responsive" *ngIf="tableData2 != null">
-                                <table class="table">
-                                    <thead class="text-primary">
-                                        <tr>
-                                            <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let row of tableData2.dataRows">
-                                            <td>{{row[0]}}</td>
-                                            <td class="text-primary">{{row[1]}}</td>
-                    
-                                        </tr>
-                                    </tbody>
-                                </table>
-                    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
+                
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-icon" data-background-color="blue">
                             <i class="material-icons">timeline</i>
                         </div>
                         <div class="card-content">
-                            <h4 class="card-title">
+                            <h4 class="card-title">常用特別卡片
                                 <!-- <small> - Rounded</small> -->
                             </h4>
                     
@@ -126,6 +100,33 @@
                                 </div>
                             </div>
                         </div> -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header card-header-icon" data-background-color="rose">
+                                    <i class="material-icons">assignment</i>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="card-title">最常使用卡片</h4>
+                                    <div class="content table-responsive" *ngIf="tableData2 != null">
+                                        <table class="table">
+                                            <thead class="text-primary">
+                                                <tr>
+                                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of tableData2.dataRows">
+                                                    <td>{{row[0]}}</td>
+                                                    <td class="text-primary">{{row[1]}}</td>
+                        
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header card-header-icon" data-background-color="rose">

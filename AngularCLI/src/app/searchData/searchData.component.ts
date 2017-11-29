@@ -13,9 +13,7 @@ declare const $: any;
 @Component({
     selector: 'app-dashboard',
     templateUrl: './searchData.component.html',
-    // styleUrls: ['./css/ace.min.css', './css/bootstrap.min.css', './css/conversation.css'],
     styleUrls: ['./css/searchData.css'],      
-    // styleUrls: ['../../assets/css/searchData.css', '../../assets/css/ace.min.css', '../../assets/css/bootstrap.min.css', '../../assets/css/conversation.css'],
     providers: [
         appService
     ]
@@ -38,6 +36,7 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         // other options...
         dateFormat: 'dd.mm.yyyy',
     };
+    private hideKeywords: any[] = [];
     private testlink = "http://hayhay0730.000webhostapp.com/test.php";
     private testTable = "http://hayhay0730.000webhostapp.com/testTable.php";
     //   private testlink = "http://www.drcare.ai/php/test.php";
@@ -145,9 +144,78 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
     }
 
     noHighlight(event){
-        // console.log('mouse leave');      //DEBUG
         $(event.target).css('font-weight','100');
         $('.ct-line').css('stroke-width', '3px');
+    }
+
+    hideLine(event){
+        var hide = false;
+        var color = $(event.target).attr('class');
+        for(var i = 0; i < this.hideKeywords.length; i ++){
+            if(this.hideKeywords[i] == color){
+                hide = true;
+                this.hideKeywords.splice(i,1);
+                break;
+            }
+        }
+        if(hide != true){
+            this.hideKeywords.push(color);
+            $(event.target).css('color', '#c7c7c7');
+            // console.log($(event.target).attr('class'));     //DEBUG
+            switch (color) {
+                case 'text-info':
+                    $('#colouredBarsChart > svg > g > g:first-child > .ct-line').css('display', 'none');
+                    $('#colouredBarsChart > svg > g > g:first-child > .ct-point').css('display', 'none');
+                    break;
+                case 'text-danger':
+                    $('#colouredBarsChart > svg > g > g:nth-child(2) > .ct-line').css('display', 'none');
+                    $('#colouredBarsChart > svg > g > g:nth-child(2) > .ct-point').css('display', 'none');
+                    break;
+                case 'text-warning':
+                    $('g > g:nth-child(3) > .ct-line').css('display', 'none');
+                    $('g > g:nth-child(3) > .ct-point').css('display', 'none');
+                    break;
+                case 'text-primary':
+                    $('g > g:nth-child(4) > .ct-line').css('display', 'none');
+                    $('g > g:nth-child(4) > .ct-point').css('display', 'none');
+                    break;
+                case 'text-success':
+                    $('g > g:nth-child(5) > .ct-line').css('display', 'none');
+                    $('g > g:nth-child(5) > .ct-point').css('display', 'none');
+                    break;
+            }
+        }else{
+
+            switch (color) {
+                case 'text-info':
+                    $(event.target).css('color', '#00bcd4');
+                    $('#colouredBarsChart > svg > g > g:first-child > .ct-line').css('display', 'flex');
+                    $('#colouredBarsChart > svg > g > g:first-child > .ct-point').css('display', 'flex');
+                    break;
+                case 'text-danger':
+                    $(event.target).css('color', '#f44336');
+                    $('#colouredBarsChart > svg > g > g:nth-child(2) > .ct-line').css('display', 'flex');
+                    $('#colouredBarsChart > svg > g > g:nth-child(2) > .ct-point').css('display', 'flex');
+                    break;
+                case 'text-warning':
+                    $(event.target).css('color', '#ff9800');
+                    $('g > g:nth-child(3) > .ct-line').css('display', 'flex');
+                    $('g > g:nth-child(3) > .ct-point').css('display', 'flex');
+                    break;
+                case 'text-primary':
+                    $(event.target).css('color', '#9c27b0');
+                    $('g > g:nth-child(4) > .ct-line').css('display', 'flex');
+                    $('g > g:nth-child(4) > .ct-point').css('display', 'flex');
+                    break;
+                case 'text-success':
+                    $(event.target).css('color', '#4caf50');
+                    $('g > g:nth-child(5) > .ct-line').css('display', 'flex');
+                    $('g > g:nth-child(5) > .ct-point').css('display', 'flex');
+                    break;
+            }
+
+        }
+        
     }
 
     // dateRangeChanged callback function called when the user apply the date range. This is
@@ -165,7 +233,9 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         console.log(this.endDate);
 
         //    update content 
-        
+        this.loadTables();
+
+        this.loadCharts();
 
     }
 
@@ -173,12 +243,14 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         this.overall = true;
 
         //    update content 
+        this.loadTables();
+
+        this.loadCharts();
        
     }
 
 
     loadTables(){
-        this.appService.getJson(this.testTable).then((data) => {
         this.tableData1 = {
             headerRow: ['關鍵字', '數量'],
             dataRows: [
@@ -215,12 +287,23 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
             ]
         };
 
+        // this.appService.getJson(this.testTable).then((data) => {
+        
+
         // console.log(data);      //DEBUG
 
         this.tableData2 = {
-            headerRow: data['headerRow'],
-            dataRows: data['dataRows']
+            headerRow: ['關鍵字', '數量'],
+            dataRows: [['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100'],
+            ['test keyword', ' 100']]
         }
+        // this.tableData2 = {
+        //     headerRow: data['headerRow'],
+        //     dataRows: data['dataRows']
+        // }
 
         this.tableData3 = {
             headerRow: ['關鍵字', '數量'],
@@ -239,13 +322,11 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
             ['test keyword', ' 100'],
             ['test keyword', ' 100']]
         }
-    });
+    // });
 
     }
 
     loadCharts(){
-
-        this.appService.getJson(this.simpleChartsLink).then((data) => {
 
         /*  **************** most searched keywords - Line Chart ******************** */
         this.keywords = [
@@ -259,11 +340,11 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         const dataColouredBarsChart = {
             labels: ['\'06', '\'07', '\'08', '\'09', '\'10', '\'11', '\'12', '\'13', '\'14', '\'15'],
             series: [
-                {'name': 'Fever','data': [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944]},        //blue
-                {'name': 'sick','data': [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647]},         //red
-                {'name': 'diarrhea','data': [23, 113, 67, 190, 239, 307, 308, 439, 410, 410, 509]} ,      //orange
-                {'name': 'dizzy','data': [31, 103, 67, 19, 39, 307, 380, 439, 410, 410, 59]},       //purple
-                {'name': 'stomache','data': [23, 13, 670, 109, 29, 70, 30, 309, 40, 410, 900]}        //green
+                { 'name': 'Fever', 'data': [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944] },        //blue
+                { 'name': 'sick', 'data': [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647] },         //red
+                { 'name': 'diarrhea', 'data': [23, 113, 67, 190, 239, 307, 308, 439, 410, 410, 509] },      //orange
+                { 'name': 'dizzy', 'data': [31, 103, 67, 19, 39, 307, 380, 439, 410, 410, 59] },       //purple
+                { 'name': 'stomache', 'data': [23, 13, 670, 109, 29, 70, 30, 309, 40, 410, 900] }        //green
             ]
         };
 
@@ -286,8 +367,8 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
             fullWidth: true,
             chartPadding: {
                 right: 40
-            } 
-            
+            }
+
         };
 
         const colouredBarsChart = new Chartist.Line('#colouredBarsChart', dataColouredBarsChart,
@@ -295,11 +376,16 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
 
         this.startAnimationForLineChart(colouredBarsChart);
 
+        // this.appService.getJson(this.simpleChartsLink).then((data) => {
+
         /*  **************** appointment & open hours - Line Chart2 ******************** */
 
         const dataColouredBarsChart2 = {
-            labels: data[0]['labels'],
-            series: data[0]['series']
+            labels: ["06", "07", "08", "09", "10", "11", "12", "13", "14", "15"],
+            series: [
+                [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944],
+                [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647]
+            ],
         };
 
         const optionsColouredBarsChart2: any = {
@@ -314,7 +400,7 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
                 showGrid: false,
             },
             low: 0,
-            high: data[0]['series'],
+            high: 1000,
             showPoint: true,
             height: '300px'
            
@@ -361,7 +447,7 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
         // start animation for the Emails Subscription Chart
         this.startAnimationForBarChart(multipleBarsChart);
 
-    });
+    // });
 
 }
 

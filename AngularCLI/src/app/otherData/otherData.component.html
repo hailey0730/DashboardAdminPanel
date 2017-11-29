@@ -1,6 +1,22 @@
 <div class="main-content">
     <div class="container-fluid">
-       
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <my-date-range-picker [options]="myDateRangePickerOptions" (dateRangeChanged)="onDateRangeChanged($event)" placeholder='{{beginDate.day}}.{{beginDate.month}}.{{beginDate.year}}'></my-date-range-picker>
+                <!-- <button class="btn btn-primary btn-round" style="vertical-align: text-bottom;" (click)="showOverall()">累積總數</button> -->
+               
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <md-select [color]="selectTheme" style="vertical-align: text-bottom;" placeholder="" name="period" [(ngModel)]="period" ngClass="btn btn-primary btn-round simple"
+                    (change)="reload()">
+                    <md-option *ngFor="let duration of durations" [value]="duration.value">
+                        {{ duration.viewValue }}
+                    </md-option>
+                </md-select>
+            </div>
+        
+        </div>
+
         <!-- <div class="row" *ngIf="figures != null">
             <div class="col-md-4" *ngFor="let figure of figures;">
                 <div class="card card-stats">
@@ -36,8 +52,8 @@
                     <div class="card-content">
                         <h4 class="card-title">用戶性別</h4>
                     </div>
-                    <div id="chartPreferences" class="ct-chart"></div>
-                    <div class="card-footer">
+                    <div id="chartPreferences" class="ct-chart" ></div>
+                    <div class="card-footer" >
                         <h6>Legend</h6>
                         <i class="fa fa-circle text-info"></i> 男
                         <i class="fa fa-circle text-danger"></i> 女
@@ -72,29 +88,15 @@
                     <div id="chartPreferences3" class="ct-chart"></div>
                     <div class="card-footer">
                         <h6>Legend</h6>
-                        <i class="fa fa-circle text-info"></i> 18以下
-                        <i class="fa fa-circle text-danger"></i> 18-24
-                        <i class="fa fa-circle text-warning"></i> 25-34
-                        <i class="fa fa-circle text-primary"></i> 35-44
-                        <i class="fa fa-circle text-success"></i> 45-54
-                        <i class="fa fa-circle text-default"></i> 55以上
+                        <i class="fa fa-circle text-info"></i> 20以下
+                        <i class="fa fa-circle text-danger"></i> 21-30
+                        <i class="fa fa-circle text-warning"></i> 31-40
+                        <i class="fa fa-circle text-primary"></i> 41-50
+                        <i class="fa fa-circle text-success"></i> 51-60
+                        <i class="fa fa-circle text-default"></i> 61以上
                     </div>
                 </div>
             </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-sm-6 col-lg-3">
-                <!-- <my-date-range-picker [options]="myDateRangePickerOptions" (dateRangeChanged)="onDateRangeChanged($event)" placeholder='{{beginDate.day}}.{{beginDate.month}}.{{beginDate.year}}'></my-date-range-picker> -->
-                <!-- <button class="btn btn-primary btn-round" style="vertical-align: text-bottom;" (click)="showOverall()">累積總數</button> -->
-                <md-select [color]="selectTheme" placeholder="" name="period" [(ngModel)]="period" ngClass="btn btn-primary btn-round simple" (change)="reload()">
-                    <md-option *ngFor="let duration of durations" [value]="duration.value">
-                        {{ duration.viewValue }}
-                    </md-option>
-                </md-select>
-            </div>
-           
         </div>
 
 
@@ -105,7 +107,7 @@
                     <i class="material-icons">timeline</i>
                 </div>
                 <div class="card-content">
-                    <h4 class="card-title">活躍用戶
+                    <h4 class="card-title">{{beginDate.month +'月'+ beginDate.day +'日活躍用戶'}}
                         <!-- <small> - Rounded</small> -->
                     </h4>
                     
@@ -132,7 +134,7 @@
                         <i class="material-icons">assignment</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">活躍用戶</h4>
+                        <h4 class="card-title">活躍時段</h4>
                         <div class="content table-responsive" *ngIf="tableData2 != null">
                             <table class="table">
                                 <thead class="text-primary">

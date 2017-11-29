@@ -30,8 +30,7 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
     public adminName = "Bob";
     public beginDate: any = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     public endDate: any;
-    public overall: boolean = false;
-    public period: any = '24hr';
+    public period: any;
     myDateRangePickerOptions: IMyDrpOptions = {
         // other options...
         dateFormat: 'dd.mm.yyyy',
@@ -130,18 +129,11 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
 
         this.loadChart();
 
-        this.appService.getJson(this.testlink).then((data) => {
+        // this.appService.getJson(this.testlink).then((data) => {
            
-            this.figures = data;
-            // this.figures.splice(3, 1);       //DEBUG: remove the last element of array
-        });
-
-
-        // //initialize conversation block========================================
-        this.appService.getJson(this.conversationLink).then((data) => {
-            this.conversations = data;
-        });
-
+        //     this.figures = data;
+        //     // this.figures.splice(3, 1);       //DEBUG: remove the last element of array
+        // });
 
         /*  **************** User Gender - Pie Chart ******************** */
 
@@ -200,39 +192,7 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
 
         new Chartist.Pie('#chartPreferences3', dataPreferences3, optionsPreferences3);
 
-        // ============returning users bar chart=============================
-
-
-        const dataMultipleBarsChart = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            series: [
-                [100, 99, 90, 87, 78, 74, 70, 66, 62, 58, 55, 50]
-            ]
-        };
-
-        const optionsMultipleBarsChart = {
-            seriesBarDistance: 10,
-            axisX: {
-                showGrid: false
-            },
-            height: '300px'
-        };
-
-        const responsiveOptionsMultipleBarsChart: any = [
-            ['screen and (max-width: 640px)', {
-                seriesBarDistance: 5,
-                axisX: {
-                    labelInterpolationFnc: function (value: any) {
-                        return value[0];
-                    }
-                }
-            }]
-        ];
-
-        const multipleBarsChart = new Chartist.Bar('#multipleBarsChart', dataMultipleBarsChart,
-            optionsMultipleBarsChart, responsiveOptionsMultipleBarsChart);
-
-        this.startAnimationForBarChart(multipleBarsChart);
+        
 
 // ========active hours color table===========================================================
         this.tableData2 = {
@@ -265,6 +225,7 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         $('[rel="tooltip"]').tooltip();
     }
 
+    
     // dateRangeChanged callback function called when the user apply the date range. This is
     // mandatory callback in this option. There are also optional inputFieldChanged and
     // calendarViewChanged callbacks.
@@ -272,43 +233,50 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         // event properties are: event.beginDate, event.endDate, event.formatted,
         // event.beginEpoc and event.endEpoc
 
-        this.overall = false;
-
         this.beginDate = event.beginDate;
         this.endDate = event.endDate;
         console.log(this.beginDate);
         console.log(this.endDate);
 
         //    update content 
+        // update donut charts
+
+
+        // update active user curve //use beginDate
+
+        // update active user table //use beginDate + 6days
         
 
+        // update retention table for the specific month
+
     }
 
-    showOverall() {
-        this.overall = true;
-
-        //    update content 
-        
-    }
-
-    refresh(){
-        this.appService.getJson(this.conversationLink).then((data) => {
-            this.conversations = data;
-        });
-    }
+  
 
     reload(){
         console.log(this.period);
+        // update donut charts
+
+    
+        // update active user table
+
     }
 
     loadChart(){
-        this.appService.getJson(this.simpleChartsLink).then((data) => {
+        //load active user curve
+        // this.appService.getJson(this.simpleChartsLink).then((data) => {
             //  console.log(data[0]);  //DEBUG
-
+        this.period = '24hr';
             const dataColouredBarsChart = {
-                labels: data[0]['labels'],
-                series: data[0]['series']
+                labels: ["12am", "2am", '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+                series: [
+                    [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944, 980]
+                ],
             };
+            // const dataColouredBarsChart = {
+            //     labels: data[0]['labels'],
+            //     series: data[0]['series']
+            // };
 
             const optionsColouredBarsChart: any = {
                 lineSmooth: Chartist.Interpolation.cardinal({
@@ -322,7 +290,8 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
                     showGrid: false,
                 },
                 low: 0,
-                high: data[0]['series'],
+                high: 1000,
+                // high: data[0]['scale'],
                 showPoint: true,
                 height: '300px',
                 chartPadding: { right: 40 }
@@ -333,7 +302,9 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
                 optionsColouredBarsChart);
 
             this.startAnimationForLineChart(colouredBarsChart);
-        });
+
+            
+        // });
     }
 
 }
