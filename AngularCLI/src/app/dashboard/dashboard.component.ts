@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public newUser : any;
   public newMessage: any;
   public updateTime: any;
+  public today: any = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
   public beginDate: any = { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()};
   public endDate: any;
   public overall: boolean = false;
@@ -250,6 +251,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         // this.figures = data;
         // console.log(this.figures);  //DEBUG
     });
+
+       //update right 2 figures
+
+       //update chart - might need to modify to include parameter
+       this.loadSimpleCharts();
+   }
+
+   showThisMonth(){
+       this.overall = false;
+       this.beginDate = this.today;
+       this.appService.getJson(this.testlink).then((data) => {
+           // this.figures = data;
+           // console.log(this.figures);  //DEBUG
+       });
 
        //update right 2 figures
 

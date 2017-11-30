@@ -5,6 +5,7 @@
                 <my-date-range-picker [options]="myDateRangePickerOptions" (dateRangeChanged)="onDateRangeChanged($event)" placeholder='{{beginDate.day}}.{{beginDate.month}}.{{beginDate.year}}'></my-date-range-picker>
         
                 <button class="btn btn-primary btn-round" style="vertical-align: text-bottom;" (click)="showOverall()">累積總數</button>
+                <button class="btn btn-primary btn-round" style="vertical-align: text-bottom;" (click)="showThisMonth()">本月總數</button>
             </div>
             <div class="col-md-6">
         

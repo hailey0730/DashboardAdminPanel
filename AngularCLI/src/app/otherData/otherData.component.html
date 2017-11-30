@@ -6,14 +6,14 @@
                 <!-- <button class="btn btn-primary btn-round" style="vertical-align: text-bottom;" (click)="showOverall()">累積總數</button> -->
                
             </div>
-            <div class="col-sm-6 col-lg-3">
+            <!-- <div class="col-sm-6 col-lg-3">
                 <md-select [color]="selectTheme" style="vertical-align: text-bottom;" placeholder="" name="period" [(ngModel)]="period" ngClass="btn btn-primary btn-round simple"
                     (change)="reload()">
                     <md-option *ngFor="let duration of durations" [value]="duration.value">
                         {{ duration.viewValue }}
                     </md-option>
                 </md-select>
-            </div>
+            </div> -->
         
         </div>
 
@@ -99,6 +99,17 @@
             </div>
         </div>
 
+        <!-- <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <md-select [color]="selectTheme" style="vertical-align: text-bottom;" placeholder="" name="period" [(ngModel)]="period" ngClass="btn btn-primary btn-round simple"
+                    (change)="reload()">
+                    <md-option *ngFor="let duration of durations" [value]="duration.value">
+                        {{ duration.viewValue }}
+                    </md-option>
+                </md-select>
+            </div>
+        
+        </div> -->
 
         <div class="row">
             <div class="col-md-12">
@@ -107,9 +118,22 @@
                     <i class="material-icons">timeline</i>
                 </div>
                 <div class="card-content">
-                    <h4 class="card-title">{{beginDate.month +'月'+ beginDate.day +'日活躍用戶'}}
-                        <!-- <small> - Rounded</small> -->
-                    </h4>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <h4 class="card-title">活躍用戶
+                                <!-- <small> - Rounded</small> -->
+                            </h4>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <md-select [color]="selectTheme" style="vertical-align: text-bottom;" placeholder="" name="period" [(ngModel)]="period" ngClass="btn btn-primary btn-round simple"
+                                (change)="reload()">
+                                <md-option *ngFor="let duration of durations" [value]="duration.value">
+                                    {{ duration.viewValue }}
+                                </md-option>
+                            </md-select>
+                        </div>
+                    
+                    </div>
                     
                 </div>
                 <div class="row">
@@ -145,18 +169,18 @@
                                 <tbody>
                                     <tr *ngFor="let row of tableData2.dataRows; let $index = index;">
                                         <td>{{row[0]}}</td>       <!-- should show day -->
-                                        <td class="{{classList2[$index][1]}}">{{row[1]}}</td>       
-                                        <td class="{{classList2[$index][2]}}">{{row[2]}}</td>
-                                        <td class="{{classList2[$index][3]}}">{{row[3]}}</td>
-                                        <td class="{{classList2[$index][4]}}">{{row[4]}}</td>
-                                        <td class="{{classList2[$index][5]}}">{{row[5]}}</td>
-                                        <td class="{{classList2[$index][5]}}">{{row[6]}}</td>
-                                        <td class="{{classList2[$index][5]}}">{{row[7]}}</td>
-                                        <td class="{{classList2[$index][5]}}">{{row[8]}}</td>
-                                        <td class="{{classList2[$index][5]}}">{{row[9]}}</td>
-                                        <td class="{{classList2[$index][5]}}">{{row[10]}}</td>
-                                        <td class="{{classList2[$index][5]}}">{{row[11]}}</td>
-                                        <td class="{{classList2[$index][5]}}">{{row[12]}}</td>
+                                        <td class="{{classList2[$index][0]}}"></td>       
+                                        <td class="{{classList2[$index][1]}}"></td>
+                                        <td class="{{classList2[$index][2]}}"></td>
+                                        <td class="{{classList2[$index][3]}}"></td>
+                                        <td class="{{classList2[$index][4]}}"></td>
+                                        <td class="{{classList2[$index][5]}}"></td>
+                                        <td class="{{classList2[$index][6]}}"></td>
+                                        <td class="{{classList2[$index][7]}}"></td>
+                                        <td class="{{classList2[$index][8]}}"></td>
+                                        <td class="{{classList2[$index][9]}}"></td>
+                                        <td class="{{classList2[$index][10]}}"></td>
+                                        <td class="{{classList2[$index][11]}}"></td>
                                     </tr>
                                 </tbody>
                             </table>

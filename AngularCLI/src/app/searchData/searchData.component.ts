@@ -29,6 +29,7 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
     public tableData3: TableData;
     public tableData4: TableData;
     public keywords: any[] = [];
+    public today: any = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     public beginDate: any = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     public endDate: any;
     public overall: boolean = false;
@@ -247,6 +248,16 @@ export class SearchDataComponent implements OnInit, AfterViewInit {
 
         this.loadCharts();
        
+    }
+
+    showThisMonth() {
+        this.overall = false;
+        this.beginDate = this.today;
+
+        //    update content 
+        this.loadTables();
+
+        this.loadCharts();
     }
 
 

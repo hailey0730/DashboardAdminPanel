@@ -28,9 +28,10 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
     public tableData2: TableData;
     public conversations: any[];
     public adminName = "Bob";
+    public today: any = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     public beginDate: any = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     public endDate: any;
-    public period: any;
+    public period: any = '24hr';
     myDateRangePickerOptions: IMyDrpOptions = {
         // other options...
         dateFormat: 'dd.mm.yyyy',
@@ -42,13 +43,13 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
         ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20']];
 
-    public classList2: any[] = [['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
-    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
-    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
-    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
-    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
-    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20'],
-    ['dark100', 'dark80', 'dark60', 'dark50', 'light40', 'light20']];
+    public classList2: any[] = [['dark100', 'dark90', 'dark80', 'dark70', 'dark60', 'dark50', 'light40', 'light30', 'light20', 'light10', 'light10', 'light10'],
+        ['dark100', 'dark90', 'dark80', 'dark70', 'dark60', 'dark50', 'light40', 'light30', 'light20', 'light10', 'light10', 'light10'],
+    ['dark100', 'dark90', 'dark80', 'dark70', 'dark60', 'dark50', 'light40', 'light30', 'light20', 'light10', 'light10', 'light10'],
+    ['dark100', 'dark90', 'dark80', 'dark70', 'dark60', 'dark50', 'light40', 'light30', 'light20', 'light10', 'light10', 'light10'],
+    ['dark100', 'dark90', 'dark80', 'dark70', 'dark60', 'dark50', 'light40', 'light30', 'light20', 'light10', 'light10', 'light10'],
+    ['dark100', 'dark90', 'dark80', 'dark70', 'dark60', 'dark50', 'light40', 'light30', 'light20', 'light10', 'light10', 'light10'],
+    ['dark100', 'dark90', 'dark80', 'dark70', 'dark60', 'dark50', 'light40', 'light30', 'light20', 'light10', 'light10', 'light10']];
 
 
     public percentList:any[] = [['100%','80%','60%','50%','40%','20%'],
@@ -242,9 +243,10 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         // update donut charts
 
 
-        // update active user curve //use beginDate
+        // update active user curve     //average
+        this.loadChart();
 
-        // update active user table //use beginDate + 6days
+        // update active user table      //average
         
 
         // update retention table for the specific month
@@ -254,11 +256,13 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
   
 
     reload(){
+        this.endDate = {};
         console.log(this.period);
         // update donut charts
 
     
         // update active user table
+        this.loadChart();
 
     }
 
@@ -266,11 +270,34 @@ export class OtherDataComponent implements OnInit, AfterViewInit {
         //load active user curve
         // this.appService.getJson(this.simpleChartsLink).then((data) => {
             //  console.log(data[0]);  //DEBUG
-        this.period = '24hr';
+
+        //labels should change to date 
+        var byPeriod = [];
+
+            if (this.period == '24hr') {
+                byPeriod = ["12am", "2am", '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm']
+            } else if (this.period == '7d') {
+                console.log('change chart label');
+                for (var i = 0; i < 7; i++) {
+                    var thatDate = this.today.day + i;
+                    byPeriod[i] = thatDate + '/' + this.today.month;
+                    console.log(byPeriod[i]);
+                }
+            } else {
+                console.log('change chart label');
+                for (var i = 0; i < 14; i++) {
+                    var thatDate = this.today.day + i;
+                    byPeriod[i] = thatDate + '/' + this.today.month;
+                    console.log(byPeriod[i]);
+                }
+            }
+
+        
             const dataColouredBarsChart = {
-                labels: ["12am", "2am", '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+                labels: byPeriod,
                 series: [
-                    [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944, 980]
+                    // [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944, 980]
+                    [100,200,300,400,500,600,700]
                 ],
             };
             // const dataColouredBarsChart = {

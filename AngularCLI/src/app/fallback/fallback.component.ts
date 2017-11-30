@@ -42,7 +42,7 @@ export class FallbackComponent implements OnInit, AfterViewInit {
         {value: '7d', viewValue: 'Last 7 days'},
         {value: '14d', viewValue: 'Last 14 days'}
     ]
-    
+    private adminPic = "../../assets/img/faces/avatar.jpg";
     private testlink = "http://hayhay0730.000webhostapp.com/otherDataTop.php";
     private usersDataLink = "http://hayhay0730.000webhostapp.com/loadUsersConv.php";
     private conversationLink = "http://hayhay0730.000webhostapp.com/conversation.php";
@@ -105,15 +105,6 @@ export class FallbackComponent implements OnInit, AfterViewInit {
     // constructor(private navbarTitleService: NavbarTitleService) { }
     public ngOnInit() {
 
-        this.loadChart();
-
-        this.appService.getJson(this.testlink).then((data) => {
-           
-            this.figures = data;
-            // this.figures.splice(3, 1);       //DEBUG: remove the last element of array
-        });
-
-
         // //initialize conversation block========================================
         this.appService.getJson(this.conversationLink).then((data) => {
             this.conversations = data;
@@ -165,39 +156,26 @@ export class FallbackComponent implements OnInit, AfterViewInit {
         console.log(this.period);
     }
 
-    loadChart(){
-        this.appService.getJson(this.simpleChartsLink).then((data) => {
-            //  console.log(data[0]);  //DEBUG
+   //conversation block
+   sendMessage(){
+       var message = $('.message').val();
 
-            const dataColouredBarsChart = {
-                labels: data[0]['labels'],
-                series: data[0]['series']
-            };
+       var newMessage = {
+           "Name": this.adminName,
+           "ImgUrl": this.adminPic,
+           "Comment": message,
+           "Time": (new Date).toLocaleTimeString()
+        };
 
-            const optionsColouredBarsChart: any = {
-                lineSmooth: Chartist.Interpolation.cardinal({
-                    tension: 10
-                }),
-                axisY: {
-                    showGrid: true,
-                    offset: 40
-                },
-                axisX: {
-                    showGrid: false,
-                },
-                low: 0,
-                high: data[0]['series'],
-                showPoint: true,
-                height: '300px',
-                chartPadding: { right: 40 }
-            };
+       this.conversations.push(newMessage);
+    //    this.appService.postJson('http://hayhay0730.000webhostapp.com/conversation.json', this.conversations);
+   }
 
+   reply(name, comment){
+       var replyText = '@' + name + ' \n "'  + comment + '"  ' + this.adminName + " : " ;
+       $('.message').val(replyText);
 
-            const colouredBarsChart = new Chartist.Line('#colouredBarsChart', dataColouredBarsChart,
-                optionsColouredBarsChart);
-
-            this.startAnimationForLineChart(colouredBarsChart);
-        });
-    }
+   }
+//conversation block end
 
 }
